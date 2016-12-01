@@ -708,11 +708,11 @@ extension DDMakeCourseViewController {
             //匹配成功
             switch p.launchType {
                 
-            case LaunchType.defaultMode:   break
-            case LaunchType.showText:      self.showText(p.indexShowText.value!)    //显示 文本框
-            case LaunchType.openImage:     self.openImagesView()             //打开 浏览页面
-            case LaunchType.closeImage:    self.closeImagesView()            //关闭 浏览页面
-            case LaunchType.moveImagePage: self.moveImage(p.indexShowImage.value!)  //图片滚动
+            case .defaultMode:   break
+            case .showText:      self.showText(p.indexShowText.value!)    //显示 文本框
+            case .openImage:     self.openImagesView()             //打开 浏览页面
+            case .closeImage:    self.closeImagesView()            //关闭 浏览页面
+            case .moveImagePage: self.moveImage(p.indexShowImage.value!)  //图片滚动
                 
             }
             

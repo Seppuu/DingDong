@@ -340,7 +340,7 @@ class Page: Object {
         
         for i in 0..<playQueue.count {
             
-            if playQueue[i].launchType == LaunchType.moveImagePage {
+            if playQueue[i].launchType == .moveImagePage {
                 let photo = playQueue[i].imageInStamp!
                 let index = recordPhotos.index(of: photo)!
                 playQueue[i].indexShowImage.value = index
@@ -506,10 +506,10 @@ class TimeStamp: Object {
         }
     }
     
-    var indexShowImage = RealmOptional<Int>()
-    var indexShowText = RealmOptional<Int>()
+    let indexShowImage = RealmOptional<Int>()
+    let indexShowText = RealmOptional<Int>()
     //在图片播放队列中的编号.默认设置一个一般不会达到的数字.
-    var indexInImageQueues = RealmOptional<Int>()
+    let indexInImageQueues = RealmOptional<Int>()
 }
 
 class DDShowTime : NSObject {
