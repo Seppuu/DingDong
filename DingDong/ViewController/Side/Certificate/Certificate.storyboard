@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G7b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Certificate View Controller-->
+        <scene sceneID="bUn-Mg-VmX">
+            <objects>
+                <viewController storyboardIdentifier="CertificateViewController" id="pCX-Wp-Yek" customClass="CertificateViewController" customModule="DingDong" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VRz-7z-0MZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vdg-Pz-Ep6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="h8h-V2-fUN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="r8l-nY-Fli">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="pCX-Wp-Yek" id="fGi-w2-HGl"/>
+                                    <outlet property="delegate" destination="pCX-Wp-Yek" id="anA-xK-qVQ"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Vdg-Pz-Ep6" firstAttribute="top" secondItem="r8l-nY-Fli" secondAttribute="bottom" id="3mY-9N-YLP"/>
+                            <constraint firstAttribute="trailing" secondItem="r8l-nY-Fli" secondAttribute="trailing" id="aF6-Rr-19S"/>
+                            <constraint firstItem="r8l-nY-Fli" firstAttribute="top" secondItem="h8h-V2-fUN" secondAttribute="top" id="afb-0c-2Qg"/>
+                            <constraint firstItem="r8l-nY-Fli" firstAttribute="leading" secondItem="h8h-V2-fUN" secondAttribute="leading" id="kvW-Lq-cdN"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="kX2-1q-48Q"/>
+                    <connections>
+                        <outlet property="tableView" destination="r8l-nY-Fli" id="liq-ED-ZAr"/>
+                        <segue destination="cu8-0i-E3b" kind="show" identifier="PersonalCertificateSegue" id="4Xo-M5-JcB"/>
+                        <segue destination="Eco-tc-Rb4" kind="show" identifier="OrganizationCertificateSegue" id="Mme-Kx-T5d"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1m2-JF-xAh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1432" y="365"/>
+        </scene>
+        <!--PersonalCertificateViewController-->
+        <scene sceneID="fMe-fT-q0o">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Personal" referencedIdentifier="PersonalCertificateViewController" id="cu8-0i-E3b" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KpB-9d-N3h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2001.5" y="236"/>
+        </scene>
+        <!--OrganizationCertificateViewController-->
+        <scene sceneID="75G-dM-rAt">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Organization" referencedIdentifier="OrganizationCertificateViewController" id="Eco-tc-Rb4" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OtU-iB-qvm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2014" y="457"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="M55-Uj-W9U">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WUi-WS-FBb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lag-NM-Tvv">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="pCX-Wp-Yek" kind="relationship" relationship="rootViewController" id="nAJ-vy-hhG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z8R-1E-eQz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="620" y="365"/>
+        </scene>
+    </scenes>
+</document>

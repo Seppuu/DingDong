@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G7b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--新的稿子-->
+        <scene sceneID="5c3-cZ-6qh">
+            <objects>
+                <viewController storyboardIdentifier="DDThemeBoardViewController" hidesBottomBarWhenPushed="YES" id="AxE-1h-M50" customClass="DDThemeBoardViewController" customModule="DingDong" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4R4-wb-xrw"/>
+                        <viewControllerLayoutGuide type="bottom" id="8AT-Lc-Le2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lCr-t0-0sd">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jUE-6x-NiG">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewLayout key="collectionViewLayout" id="dOi-fJ-Mtl"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="verticalCell" reuseIdentifier="verticalCell" id="3p6-uC-Baa" customClass="RACollectionViewCell" customModule="DingDong" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="64" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.66157813560000001" green="0.67816953830000004" blue="0.79949194869999995" alpha="0.0" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="8AT-Lc-Le2" firstAttribute="top" secondItem="jUE-6x-NiG" secondAttribute="bottom" id="233-oL-yaM"/>
+                            <constraint firstItem="jUE-6x-NiG" firstAttribute="leading" secondItem="lCr-t0-0sd" secondAttribute="leading" id="6KI-T7-5Wc"/>
+                            <constraint firstAttribute="trailing" secondItem="jUE-6x-NiG" secondAttribute="trailing" id="ElV-n6-abC"/>
+                            <constraint firstItem="jUE-6x-NiG" firstAttribute="top" secondItem="4R4-wb-xrw" secondAttribute="bottom" id="nVn-SC-I6A"/>
+                            <constraint firstItem="jUE-6x-NiG" firstAttribute="top" secondItem="lCr-t0-0sd" secondAttribute="top" id="oyq-yc-6Z4"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="nVn-SC-I6A"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="新的稿子" id="xif-6J-nec">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="jNR-Nd-2Kf">
+                            <connections>
+                                <action selector="backCancelButtonTap:" destination="AxE-1h-M50" id="m2b-ov-3Ai"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="发布" id="fdW-7O-jeP">
+                            <connections>
+                                <action selector="publishRecords:" destination="AxE-1h-M50" id="R06-SO-JMa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="collectionView" destination="jUE-6x-NiG" id="4rL-9f-318"/>
+                        <segue destination="8Rw-Wi-Wjf" kind="show" identifier="goToAlbumPublish" id="Vs0-eS-sZj">
+                            <nil key="action"/>
+                        </segue>
+                        <segue destination="kfd-Y2-n16" kind="presentation" identifier="makeCourse" id="aLn-pQ-PDO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rhR-zb-G9Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3790" y="2174"/>
+        </scene>
+        <!--LessonReleaseViewController-->
+        <scene sceneID="zHy-RG-LRV">
+            <objects>
+                <viewControllerPlaceholder storyboardName="LessonRelease" referencedIdentifier="LessonReleaseViewController" id="8Rw-Wi-Wjf" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k7C-hw-ddd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4429" y="2095"/>
+        </scene>
+        <!--DDMakeCourseViewController-->
+        <scene sceneID="XCe-g9-5aZ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MakeLesson" referencedIdentifier="DDMakeCourseViewController" id="kfd-Y2-n16" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zps-Wa-4DM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4430.5" y="2242"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="PZ5-7c-Zbc">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lKk-Iy-Wmq" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ir3-Ot-7Jp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="AxE-1h-M50" kind="relationship" relationship="rootViewController" id="eMU-h8-EGd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9m3-CP-1Ir" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2978" y="2174"/>
+        </scene>
+    </scenes>
+</document>

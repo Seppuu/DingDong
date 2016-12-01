@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G7b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Channel List View Controller-->
+        <scene sceneID="YRF-zf-igj">
+            <objects>
+                <viewController storyboardIdentifier="ChannelListViewController" id="hzG-Io-DcP" customClass="ChannelListViewController" customModule="DingDong" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="mq2-5I-vDI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="hzG-Io-DcP" id="Wpd-Rw-2Al"/>
+                            <outlet property="delegate" destination="hzG-Io-DcP" id="QcK-Rd-Wd5"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="mn8-jJ-BK6"/>
+                    <connections>
+                        <outlet property="channelListTableView" destination="mq2-5I-vDI" id="dM8-i2-WrO"/>
+                        <segue destination="x1L-55-eUW" kind="show" identifier="ChannelViewControllerSegue" id="WZQ-wv-uhF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pH1-yI-yfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1233" y="293"/>
+        </scene>
+        <!--ChannelViewController-->
+        <scene sceneID="6Gw-3c-32q">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Channel" referencedIdentifier="ChannelViewController" id="x1L-55-eUW" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mpE-e3-0HM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1783.5" y="183"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ZMF-9w-Syr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WTF-aK-MBb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oeV-LE-Ebl">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="hzG-Io-DcP" kind="relationship" relationship="rootViewController" id="l5F-xY-mOx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sm1-i3-pcc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="421" y="293"/>
+        </scene>
+    </scenes>
+</document>

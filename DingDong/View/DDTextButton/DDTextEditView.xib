@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="DDTextEditView" customModule="DingDong" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="48"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogh-eA-32l">
+                    <rect key="frame" x="0.0" y="0.0" width="120" height="48"/>
+                    <color key="backgroundColor" red="0.73650902640198601" green="0.74207100537073423" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="字号">
+                        <color key="titleColor" red="0.51185897435897432" green="0.49627567379872922" blue="0.50199358889786938" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" red="0.85761485654675762" green="1" blue="0.99297533378349689" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="fontTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="ZdC-8t-hC9"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JWA-yy-oKc">
+                    <rect key="frame" x="120" y="0.0" width="120" height="48"/>
+                    <color key="backgroundColor" red="1" green="0.60029579980000003" blue="0.62276307669999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="颜色">
+                        <color key="titleColor" red="0.51185897435897432" green="0.49627567379872922" blue="0.50199358889786938" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" red="0.85761485654675762" green="1" blue="0.99297533378349689" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="colorTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="15J-ze-EZV"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kzi-89-mXg">
+                    <rect key="frame" x="240" y="0.0" width="120" height="48"/>
+                    <color key="backgroundColor" red="0.66363261169999999" green="0.83984257169999998" blue="0.68538090500000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="动画">
+                        <color key="titleColor" red="0.51185897435897432" green="0.49627567379872922" blue="0.50199358889786938" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" red="0.85761485654675762" green="1" blue="0.99297533378349689" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="animationButtonTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="SX3-uE-dxN"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WSe-2F-BX8">
+                    <rect key="frame" x="360" y="0.0" width="120" height="48"/>
+                    <color key="backgroundColor" red="1" green="0.71838432603802849" blue="0.49081696910419725" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="删除">
+                        <color key="titleColor" red="0.51185897435897432" green="0.49627567379872922" blue="0.50199358889786938" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" red="0.85761485654675762" green="1" blue="0.99297533378349689" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="deleteTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="tmq-2d-Ycv"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N4d-3a-kjc">
+                    <rect key="frame" x="480" y="0.0" width="120" height="48"/>
+                    <color key="backgroundColor" red="0.6879483906225734" green="0.9213486651811339" blue="0.92786458336666655" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="收起">
+                        <color key="titleColor" red="0.51185897435897432" green="0.49627567379872922" blue="0.50199358889786938" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" red="0.85761485654675762" green="1" blue="0.99297533378349689" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="editConfirmTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="ga7-Cl-VrO"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="N4d-3a-kjc" firstAttribute="height" secondItem="ogh-eA-32l" secondAttribute="height" id="2ow-Fc-xzR"/>
+                <constraint firstItem="WSe-2F-BX8" firstAttribute="height" secondItem="ogh-eA-32l" secondAttribute="height" id="9HW-WZ-TqU"/>
+                <constraint firstItem="WSe-2F-BX8" firstAttribute="width" secondItem="ogh-eA-32l" secondAttribute="width" id="ChA-Y2-J1D"/>
+                <constraint firstItem="WSe-2F-BX8" firstAttribute="leading" secondItem="kzi-89-mXg" secondAttribute="trailing" id="Lnf-hV-ghg"/>
+                <constraint firstItem="ogh-eA-32l" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="MzW-dv-tpp"/>
+                <constraint firstAttribute="bottom" secondItem="ogh-eA-32l" secondAttribute="bottom" id="N2a-Vn-tVh"/>
+                <constraint firstItem="N4d-3a-kjc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ObF-fW-sKe"/>
+                <constraint firstAttribute="bottom" secondItem="N4d-3a-kjc" secondAttribute="bottom" id="PIx-9d-WQC"/>
+                <constraint firstAttribute="trailing" secondItem="N4d-3a-kjc" secondAttribute="trailing" id="RHY-07-pFS"/>
+                <constraint firstAttribute="bottom" secondItem="JWA-yy-oKc" secondAttribute="bottom" id="Spv-O8-9as"/>
+                <constraint firstItem="kzi-89-mXg" firstAttribute="height" secondItem="ogh-eA-32l" secondAttribute="height" id="XJg-zn-k2M"/>
+                <constraint firstItem="kzi-89-mXg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="bic-Jm-sB4"/>
+                <constraint firstItem="N4d-3a-kjc" firstAttribute="width" secondItem="ogh-eA-32l" secondAttribute="width" id="brR-Qh-0ml"/>
+                <constraint firstItem="JWA-yy-oKc" firstAttribute="width" secondItem="ogh-eA-32l" secondAttribute="width" id="iRI-50-Di9"/>
+                <constraint firstItem="kzi-89-mXg" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="muc-GV-FWe"/>
+                <constraint firstItem="kzi-89-mXg" firstAttribute="leading" secondItem="JWA-yy-oKc" secondAttribute="trailing" id="nGN-tw-hPe"/>
+                <constraint firstAttribute="bottom" secondItem="WSe-2F-BX8" secondAttribute="bottom" id="puu-G3-SHf"/>
+                <constraint firstItem="JWA-yy-oKc" firstAttribute="height" secondItem="ogh-eA-32l" secondAttribute="height" id="qNB-ji-s8O"/>
+                <constraint firstItem="WSe-2F-BX8" firstAttribute="leading" secondItem="kzi-89-mXg" secondAttribute="trailing" id="qf0-5V-Bwz"/>
+                <constraint firstItem="JWA-yy-oKc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qpm-pR-g98"/>
+                <constraint firstItem="JWA-yy-oKc" firstAttribute="leading" secondItem="ogh-eA-32l" secondAttribute="trailing" id="sLF-bJ-ixw"/>
+                <constraint firstItem="N4d-3a-kjc" firstAttribute="leading" secondItem="WSe-2F-BX8" secondAttribute="trailing" id="tuJ-M0-cNb"/>
+                <constraint firstItem="WSe-2F-BX8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uY4-Lz-CEO"/>
+                <constraint firstItem="ogh-eA-32l" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="viM-C4-UYF"/>
+                <constraint firstItem="kzi-89-mXg" firstAttribute="width" secondItem="ogh-eA-32l" secondAttribute="width" id="xG2-f1-Wqa"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="animationButton" destination="kzi-89-mXg" id="ssQ-bl-OWg"/>
+                <outlet property="colorButton" destination="JWA-yy-oKc" id="d8q-sC-El0"/>
+                <outlet property="deleteButton" destination="WSe-2F-BX8" id="MTm-1M-jSt"/>
+                <outlet property="editConfirmButton" destination="N4d-3a-kjc" id="Ovb-Ds-xfa"/>
+                <outlet property="fontButton" destination="ogh-eA-32l" id="RhB-uI-ryG"/>
+            </connections>
+            <point key="canvasLocation" x="575" y="304"/>
+        </view>
+    </objects>
+</document>

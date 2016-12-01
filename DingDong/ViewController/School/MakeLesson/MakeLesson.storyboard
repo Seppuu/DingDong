@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G7b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Make Course View Controller-->
+        <scene sceneID="Okl-0P-Z6K">
+            <objects>
+                <viewController storyboardIdentifier="DDMakeCourseViewController" hidesBottomBarWhenPushed="YES" id="LvM-xl-pMl" customClass="DDMakeCourseViewController" customModule="DingDong" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7JS-ue-8vx"/>
+                        <viewControllerLayoutGuide type="bottom" id="uSZ-hw-476"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2iQ-LG-PoN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dte-vo-2g9" userLabel="topView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MOD-3l-bjp">
+                                        <rect key="frame" x="8" y="20" width="46" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="46" id="Ssu-4g-I3x"/>
+                                            <constraint firstAttribute="height" constant="44" id="vDX-eO-TD8"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="返回"/>
+                                        <connections>
+                                            <action selector="backButtonTap:" destination="LvM-xl-pMl" eventType="touchUpInside" id="fFd-zk-9zX"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="录制" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsa-Ok-qP3">
+                                        <rect key="frame" x="283" y="25" width="34" height="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="18" id="6Xd-x0-qHu"/>
+                                            <constraint firstAttribute="width" constant="34" id="Ngj-1A-Yrh"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="hsa-Ok-qP3" firstAttribute="top" secondItem="dte-vo-2g9" secondAttribute="top" constant="25" id="6uq-tO-YTj"/>
+                                    <constraint firstAttribute="height" constant="64" id="MYS-ST-VD9"/>
+                                    <constraint firstItem="MOD-3l-bjp" firstAttribute="leading" secondItem="dte-vo-2g9" secondAttribute="leading" constant="8" id="SFb-rC-VVO"/>
+                                    <constraint firstAttribute="bottom" secondItem="MOD-3l-bjp" secondAttribute="bottom" id="Trc-LN-mz2"/>
+                                    <constraint firstAttribute="width" constant="600" id="lzQ-Dw-60h"/>
+                                    <constraint firstItem="MOD-3l-bjp" firstAttribute="top" secondItem="dte-vo-2g9" secondAttribute="top" constant="17" id="n1U-jC-mMV"/>
+                                    <constraint firstItem="hsa-Ok-qP3" firstAttribute="centerX" secondItem="dte-vo-2g9" secondAttribute="centerX" id="t8w-xY-aFB"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="n1U-jC-mMV"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="dte-vo-2g9" secondAttribute="trailing" id="8kS-fN-sJm"/>
+                            <constraint firstItem="dte-vo-2g9" firstAttribute="leading" secondItem="2iQ-LG-PoN" secondAttribute="leading" id="WMP-Cx-qBa"/>
+                            <constraint firstItem="dte-vo-2g9" firstAttribute="top" secondItem="2iQ-LG-PoN" secondAttribute="top" id="vKF-6W-ecm"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="titleLabel" destination="hsa-Ok-qP3" id="DsO-1N-9Ud"/>
+                        <outlet property="topView" destination="dte-vo-2g9" id="bvw-7V-aBb"/>
+                        <outlet property="topViewTopConstraint" destination="vKF-6W-ecm" id="6xr-nj-zuk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tLb-uT-nwJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3684" y="2638"/>
+        </scene>
+    </scenes>
+</document>

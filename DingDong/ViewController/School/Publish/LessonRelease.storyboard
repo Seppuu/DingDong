@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G7b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--课程信息-->
+        <scene sceneID="OSd-pC-Ckc">
+            <objects>
+                <viewController storyboardIdentifier="LessonReleaseViewController" id="8yn-dM-XnF" customClass="LessonReleaseViewController" customModule="DingDong" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="n7s-Vn-RWb"/>
+                        <viewControllerLayoutGuide type="bottom" id="kZZ-hR-sgZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QSQ-Zb-dGR">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="d9H-GW-nsu">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="8yn-dM-XnF" id="fMu-Rt-ruY"/>
+                                    <outlet property="delegate" destination="8yn-dM-XnF" id="kPm-uZ-CzW"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kZZ-hR-sgZ" firstAttribute="top" secondItem="d9H-GW-nsu" secondAttribute="bottom" id="XmP-Oz-mwn"/>
+                            <constraint firstItem="d9H-GW-nsu" firstAttribute="top" secondItem="QSQ-Zb-dGR" secondAttribute="top" id="ZgH-R4-bWu"/>
+                            <constraint firstItem="d9H-GW-nsu" firstAttribute="leading" secondItem="QSQ-Zb-dGR" secondAttribute="leading" id="dtI-Od-Eez"/>
+                            <constraint firstAttribute="trailing" secondItem="d9H-GW-nsu" secondAttribute="trailing" id="hW7-y8-pwK"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="课程信息" id="wZf-X0-LrI"/>
+                    <connections>
+                        <outlet property="infoTableView" destination="d9H-GW-nsu" id="Xgc-GN-e4z"/>
+                        <segue destination="lRL-p5-ESX" kind="show" identifier="AlbumCreate" id="Clb-A5-hiv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vb9-g6-geE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1190" y="358"/>
+        </scene>
+        <!--AlbumCreateViewController-->
+        <scene sceneID="NL8-u1-ze6">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AlbumCreate" referencedIdentifier="AlbumCreateViewController" id="lRL-p5-ESX" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Tu-HV-iJs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1756.5" y="363"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Eop-Bj-rMf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bs1-Is-zcl" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6vM-TR-ZEg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="8yn-dM-XnF" kind="relationship" relationship="rootViewController" id="gm6-VG-tli"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="frO-Xe-hlN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="288" y="358"/>
+        </scene>
+    </scenes>
+</document>
