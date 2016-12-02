@@ -120,12 +120,16 @@ class DDAudioHandler:NSObject {
         let start1 = CMTimeMake(0, 1)//起点
         //这里获取毫秒级别时间点.CMTimeMake(1, 10); // 1/10 second = 0.1 second
         let start2 = CMTimeMake(Int64(start * 1000), 1000)//第二个点
-        let start3 = CMTimeMake(Int64(end * 1000), 1000)//第三个点
+        
+        
         let assetAtTransfer = AVAsset(url:toURL)//获取中转站中的录音文件asset
-        let end = assetAtTransfer.duration //终点
+        //当end时0.0时,这时实际上是录音末尾,这里修改一下!!!
+        let start3 = end == 0.0 ? assetAtTransfer.duration :  CMTimeMake(Int64(end * 1000), 1000)//第三个点
+        
+        let start4 = assetAtTransfer.duration //终点
         
         let range1 = CMTimeRangeFromTimeToTime(start1, start2)
-        let range2 = CMTimeRangeFromTimeToTime(start3, end)
+        let range2 = CMTimeRangeFromTimeToTime(start3, start4)
         
         print("start:\(start2)  end:\(start3)")
         
@@ -268,7 +272,7 @@ class DDAudioHandler:NSObject {
             return
         }
         else {
-            //有多个录音文件需要合并,收集这些文件的URL.教给裁决者.
+            //有多个录音文件需要合并,收集这些文件的URL.给裁决者.
             let toURL = FileManager.ddRecordURLWithNameInTransfer("recordCombined")!
             let fileManager = FileManager.default
             
@@ -276,7 +280,7 @@ class DDAudioHandler:NSObject {
                 
                 combineAudios(recordURLs: recordURLs, outputURL: toURL){
                     [weak self] in
-                    //合并完成.删除原路径下的分散的录音.将中转站中的录音移到lessonindex目录下.
+                    //合并完成.删除原路径下的分散的录音.将中转站中的录音移到lessonIndex目录下.
                     //成功之后,删除,旧的文件,
                     //同时将新的文件重新命名为"record0.m4a",回到原来的路径,统计Int归零
                     var FileRecordedNumber = 0

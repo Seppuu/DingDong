@@ -374,7 +374,7 @@ extension FileManager {
     }
     
     
-    //MARK:Count Record Of Lesson
+    //MARK:Count Record of Lesson
     class func recordCountInLessonIndex(_ lessonFileURL:URL) -> Int {
         let fileManager = FileManager.default
         

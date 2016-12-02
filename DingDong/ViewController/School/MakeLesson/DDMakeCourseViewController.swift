@@ -136,9 +136,9 @@ class DDMakeCourseViewController: BaseViewController {
         timeView.backgroundColor = UIColor.clear
         timeView.dotView.alpha = 0.0
         topView.addSubview(timeView)
-        timeView.snp_makeConstraints { (make) in
-            make.centerX.equalTo(topView.snp_centerX)
-            make.bottom.equalTo(topView.snp_bottom)
+        timeView.snp.makeConstraints { (make) in
+            make.centerX.equalTo(topView.snp.centerX)
+            make.bottom.equalTo(topView.snp.bottom)
             make.width.equalTo(150)
             make.height.equalTo(21)
         }
@@ -158,7 +158,7 @@ class DDMakeCourseViewController: BaseViewController {
         
         // Add Button
         view.addSubview(addTextButton)
-        addTextButton.snp_makeConstraints { (make) -> Void in
+        addTextButton.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(self.view).offset(8)
             make.top.equalTo(self.view).offset(64 + 8)
             make.width.equalTo(30)
@@ -168,7 +168,7 @@ class DDMakeCourseViewController: BaseViewController {
         
         //展示图片
         view.addSubview(showPhotoButton)
-        showPhotoButton.snp_makeConstraints { (make) -> Void in
+        showPhotoButton.snp.makeConstraints { (make) -> Void in
             make.right.equalTo(self.view).offset(-8)
             make.top.equalTo(self.view).offset(64 + 8)
             make.width.equalTo(30)
@@ -178,7 +178,7 @@ class DDMakeCourseViewController: BaseViewController {
         
         //添加图片按钮
         view.addSubview(photoButton)
-        photoButton.snp_makeConstraints { (make) -> Void in
+        photoButton.snp.makeConstraints { (make) -> Void in
             make.right.equalTo(self.view).offset(-8)
             make.top.equalTo(self.view).offset(64 + 8)
             make.width.equalTo(30)
@@ -187,7 +187,7 @@ class DDMakeCourseViewController: BaseViewController {
         photoButton.alpha = 0.0
         
         view.addSubview(countDot)
-        countDot.snp_makeConstraints { (make) -> Void in
+        countDot.snp.makeConstraints { (make) -> Void in
             make.right.equalTo(self.view).offset(-2)
             make.top.equalTo(self.view).offset(64 + 2)
             make.width.height.equalTo(18)
@@ -204,7 +204,7 @@ class DDMakeCourseViewController: BaseViewController {
         
         // Add DDRecordControl
         view.addSubview(recordControl)
-        recordControl.snp_makeConstraints { (make) -> Void in
+        recordControl.snp.makeConstraints { (make) -> Void in
             make.left.right.equalTo(view)
             recordControlBottomCons =  make.bottom.equalTo(view).offset(150).constraint
             make.height.equalTo(48 * 2 + 10)
@@ -224,7 +224,7 @@ class DDMakeCourseViewController: BaseViewController {
         // Add textEdit
         textEditView = DDTextEditView.instanceFromNib()
         view.addSubview(textEditView)
-        textEditView.snp_makeConstraints({ (make) in
+        textEditView.snp.makeConstraints({ (make) in
             
             make.left.right.equalTo(view)
             textEditViewBottomCons = make.bottom.equalTo(view).offset(48).constraint
@@ -235,7 +235,7 @@ class DDMakeCourseViewController: BaseViewController {
         
         countDownView = CountDownView.instanceFromNib()
         view.addSubview(countDownView)
-        countDownView.snp_makeConstraints { (make) in
+        countDownView.snp.makeConstraints { (make) in
             make.center.equalTo(view)
             make.width.equalTo(80)
             make.height.equalTo(120)
@@ -1221,6 +1221,7 @@ extension DDMakeCourseViewController: DDRecordControlActionDelegate {
     }
     
     func recordBegin() {
+        
         page.ddTextViews.forEach {
             
             guard !$0.hasShowTime else { return }

@@ -163,9 +163,9 @@ class DDRecordControl: UIView {
         //波形图
         waveView = DDWaveView()
         addSubview(waveView)
-        waveView.snp_makeConstraints { (make) in
+        waveView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalTo(self)
-            waveViewBottomConstraint = make.bottom.equalTo(self.snp_bottom).constraint
+            waveViewBottomConstraint = make.bottom.equalTo(self.snp.bottom).constraint
             make.height.equalTo(48 * 2)
         }
         
@@ -175,9 +175,9 @@ class DDRecordControl: UIView {
     func makeTryPlaySliderUI() {
         //滑块
         addSubview(tryPlaySlider)
-        tryPlaySlider.snp_makeConstraints { (make) -> Void in
+        tryPlaySlider.snp.makeConstraints { (make) in
             make.left.right.equalTo(self)
-            make.bottom.equalTo(waveView.snp_top).offset(-5)
+            make.bottom.equalTo(waveView.snp.top).offset(-5)
             make.height.equalTo(10)
         }
         
@@ -194,7 +194,7 @@ class DDRecordControl: UIView {
         //"播放" "录音" "剪辑"
         addSubview(buttonContainer)
         buttonContainer.isUserInteractionEnabled = true
-        buttonContainer.snp_makeConstraints { (make) -> Void in
+        buttonContainer.snp.makeConstraints { (make) in
             make.left.right.equalTo(self)
             make.bottom.equalTo(self).constraint
             make.height.equalTo(48)
@@ -217,9 +217,9 @@ class DDRecordControl: UIView {
         
         //播放按钮
         addSubview(tryPlayButton)
-        tryPlayButton.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(buttonContainer.snp_left).offset(leftMargin)
-            make.centerY.equalTo(buttonContainer.snp_centerY)
+        tryPlayButton.snp.makeConstraints { (make) in
+            make.left.equalTo(buttonContainer.snp.left).offset(leftMargin)
+            make.centerY.equalTo(buttonContainer.snp.centerY)
             make.width.equalTo(buttonWidth)
             make.height.equalTo(buttonHeight)
         }
@@ -227,7 +227,7 @@ class DDRecordControl: UIView {
         tryPlayButton.addTarget(self, action: #selector(DDRecordControl.playWholeFile), for: .touchUpInside)
         
         //录音按钮
-        microButton.snp_makeConstraints { (make) -> Void in
+        microButton.snp.makeConstraints { (make) in
             
             make.center.equalTo(buttonContainer)
             make.width.equalTo(43)
@@ -238,9 +238,9 @@ class DDRecordControl: UIView {
         microButton.addTarget(self, action: #selector(DDRecordControl.voiceRecord), for: .touchUpInside)
         
         //剪辑按钮
-        trimButton.snp_makeConstraints { (make) -> Void in
-            make.right.equalTo(buttonContainer.snp_right).offset(-rightMargin)
-            make.centerY.equalTo(buttonContainer.snp_centerY)
+        trimButton.snp_makeConstraints { (make) in
+            make.right.equalTo(buttonContainer.snp.right).offset(-rightMargin)
+            make.centerY.equalTo(buttonContainer.snp.centerY)
             make.width.equalTo(buttonWidth)
             make.height.equalTo(buttonHeight)
         }
@@ -250,9 +250,9 @@ class DDRecordControl: UIView {
         
         
         //"取消"按钮,和"剪辑"一个位置
-        trimCancelButton.snp_makeConstraints { (make) -> Void in
-            make.right.equalTo(buttonContainer.snp_right).offset(-rightMargin)
-            make.centerY.equalTo(buttonContainer.snp_centerY)
+        trimCancelButton.snp_makeConstraints { (make) in
+            make.right.equalTo(buttonContainer.snp.right).offset(-rightMargin)
+            make.centerY.equalTo(buttonContainer.snp.centerY)
             make.width.equalTo(buttonWidth)
             make.height.equalTo(buttonHeight)
         }
@@ -262,7 +262,7 @@ class DDRecordControl: UIView {
         trimCancelButton.addTarget(self, action: #selector(DDRecordControl.trimCancel), for: .touchUpInside)
         
         //剪辑"确认"按钮,和"录音"一个位置.
-        trimConfirmButton.snp_makeConstraints { (make) -> Void in
+        trimConfirmButton.snp.makeConstraints { (make) in
             make.center.equalTo(buttonContainer)
             make.width.equalTo(43)
             make.height.equalTo(40)
@@ -760,6 +760,7 @@ class DDRecordControl: UIView {
         if state == .trimmingRecord {
             
             let start = self.startSec
+            //注意,当直接剪切的时候,按照规则,结束时间点应该是最末的时间,但是这里pauseEndSec,是0.0 理论上,这个0.0是不可能在剪切时出现的.它的默认值应该是录音总时长
             let end = self.pauseEndSec
             trimAudioByHelper(start, end:end)
         }
@@ -806,17 +807,21 @@ class DDRecordControl: UIView {
     
     func setCADisplayLinkTimer() {
         
-        displayLink = CADisplayLink(target: self, selector: #selector(DDRecordControl.checkVoiceRecordValue(_:)))
+//        displayLink = CADisplayLink(target: self, selector: #selector(DDRecordControl.checkVoiceRecordValue(_:)))
+//        
+//        // 频率为每秒 4次 CADisplayLink的selector每秒调用次数=60/frameInterval
+//        displayLink.frameInterval = 15
+//        
+//        displayLink.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+//        
+//        // 如果进来前有声音在播放，令其停止
+//        if let audioPlayer = DDAudioService.sharedManager.audioPlayer, audioPlayer.isPlaying {
+//            audioPlayer.pause()
+//        }
         
-        // 频率为每秒 4次 CADisplayLink的selector每秒调用次数=60/frameInterval
-        displayLink.frameInterval = 15
+        displayLink = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(DDRecordControl.checkVoiceRecordValue), userInfo: nil, repeats: true)
+        displayLink.fire()
         
-        displayLink.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-        
-        // 如果进来前有声音在播放，令其停止
-        if let audioPlayer = DDAudioService.sharedManager.audioPlayer, audioPlayer.isPlaying {
-            audioPlayer.pause()
-        }
     }
     
     //移除帧计时器,否则会重复调用.
@@ -824,14 +829,13 @@ class DDRecordControl: UIView {
         
         if (displayLink != nil) {
             
-            displayLink.remove(from: RunLoop.current, forMode: RunLoopMode.commonModes)
-            displayLink = nil
+            displayLink.invalidate()
         }
         
     }
     
     //录音时更新波形数组
-    @objc fileprivate func checkVoiceRecordValue(_ sender: AnyObject) {
+    func checkVoiceRecordValue() {
         
         if let audioRecorder = DDAudioService.sharedManager.audioRecorder {
             
@@ -1177,7 +1181,9 @@ class DDRecordControl: UIView {
     
     fileprivate var voiceFileURL: URL?
     fileprivate var audioPlayer: AVAudioPlayer?
-    fileprivate var displayLink: CADisplayLink! //波形更新计时器
+   // fileprivate var displayLink: CADisplayLink! //波形更新计时器
+    
+    fileprivate var displayLink: Timer!
     
     var limmitSecond:Int = 60 //录音时长限制
     

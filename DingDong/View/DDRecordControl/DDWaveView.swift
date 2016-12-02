@@ -57,7 +57,7 @@ class DDWaveView: UIView {
         //滑动的线
         indicatorView = UIImageView()
         addSubview(indicatorView)
-        indicatorView.snp_makeConstraints { (make) -> Void in
+        indicatorView.snp.makeConstraints { (make)  in
             indicatorViewCenterXCons =  make.centerX.equalTo(self).constraint
             make.center.equalTo(sampleView)
             make.height.equalTo(sampleView)
