@@ -123,22 +123,32 @@ class DDAudioHandler:NSObject {
         
         
         let assetAtTransfer = AVAsset(url:toURL)//获取中转站中的录音文件asset
-        //当end时0.0时,这时实际上是录音末尾,这里修改一下!!!
-        let start3 = end == 0.0 ? assetAtTransfer.duration :  CMTimeMake(Int64(end * 1000), 1000)//第三个点
+        
+        let start3 = CMTimeMake(Int64(end * 1000), 1000)//第三个点
         
         let start4 = assetAtTransfer.duration //终点
         
         let range1 = CMTimeRangeFromTimeToTime(start1, start2)
         let range2 = CMTimeRangeFromTimeToTime(start3, start4)
         
-        print("start:\(start2)  end:\(start3)")
+        //print("start:\(start2)  end:\(start3)")
         
         trimmBeginHandler?()
         
         
         //剪切掉选中的部分,剪切的部分是异步的,所以完成之后回到主线程更新UI.
         exportAssetAndDeleteIt(audioDocURL!, asset: assetAtTransfer, timeRange: range1, fileName: "record0.m4a")
-        exportAssetAndDeleteIt(audioDocURL!, asset: assetAtTransfer, timeRange: range2, fileName: "record1.m4a")   
+        
+        //当end时0.0时,这时实际上是录音末尾,不需要剪切第二段.
+        if end != 0.0 {
+            exportAssetAndDeleteIt(audioDocURL!, asset: assetAtTransfer, timeRange: range2, fileName: "record1.m4a")
+        }
+        else {
+            //假装完成了一次剪切.
+            self.trimmedCount += 1
+        }
+        
+        
         
     }
     

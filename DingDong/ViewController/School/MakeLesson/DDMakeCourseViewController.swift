@@ -668,7 +668,7 @@ extension DDMakeCourseViewController {
         imagesAttachView.imageScorlledHandler = { [unowned self] (index) in
             
             guard self.recordControl.state == .recording else { return }
-            
+            print("图片移动记录时刻:\(ddRecordTimelyObserver)")
             let point = TimeStamp()
             point.time = ddRecordTimelyObserver
             point.imageInStamp = self.page.recordPhotos[index]
@@ -699,11 +699,11 @@ extension DDMakeCourseViewController {
     }
     
     
-    //MARK: 播放队列.每0.1秒检测一次
+    //MARK: 播放队列.每0.01秒检测一次
     func launchPlayQueue() {
         
         page.playQueue.forEach { [unowned self] (p) in
-            print("正在播放:\(ddAudioPlayTimelyObserver)")
+            
             guard p.time == ddAudioPlayTimelyObserver else { return }
             //匹配成功
             switch p.launchType {
@@ -1314,7 +1314,7 @@ extension DDMakeCourseViewController: DDRecordControlActionDelegate {
         
         alertView = DDPlaypartRecordAlertView()
         view.addSubview(alertView!)
-        alertView!.snp_makeConstraints { (make) -> Void in
+        alertView!.snp.makeConstraints { (make) in
             make.center.equalTo(view)
             make.width.equalTo(200)
             make.height.equalTo(300)

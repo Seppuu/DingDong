@@ -46,7 +46,7 @@ var kAudioFileName = ""
     @objc optional func recordTryPlayPaused()
     
     /**
-     每0.1秒触发一次的播放监控.
+     每0.01秒触发一次的播放监控.
      */
     @objc optional func recordTryPlaying()
     
@@ -608,12 +608,29 @@ class DDRecordControl: UIView {
     
     var aCount:Int = 0
     
+    
+    
     @objc fileprivate func updateAudioPlaybackProgress(_ timer: Timer) {
         
         if let audioPlayer = audioPlayer {
             let currentTime = audioPlayer.currentTime
             
             self.tryPlaySlider.value = Float(currentTime)
+            
+           
+            // += 0.01
+            
+            //let currentDouble = Double(currentTime)
+            
+            //let d = Decimal.init
+            
+            let currentSeekIndex = turnFloatTimeToSampleIndex(Float(currentTime))
+            waveView.updateWaveViewColor(currentSeekIndex)
+            //播放进度超过屏幕宽度之后,需要移动波形图.
+            let playedWidth = CGFloat((currentSeekIndex + 1) * (4 + 2))
+            if playedWidth >= screenWidth {
+                waveView.sampleView.makeAnime()
+            }
             
             //Index 0 based
             guard currentTime >= 0.25 else {return}
@@ -628,17 +645,9 @@ class DDRecordControl: UIView {
             
             aCount = 0
             
-            let currentSeekIndex = turnFloatTimeToSampleIndex(Float(currentTime))
-            waveView.updateWaveViewColor(currentSeekIndex)
-            //播放进度超过屏幕宽度之后,需要移动波形图.
-            let playedWidth = CGFloat((currentSeekIndex + 1) * (4 + 2))
-            if playedWidth >= screenWidth {
-                waveView.sampleView.makeAnime()
-            }
-            
             //从波形位置来统计时间.4个等于1秒.
             ddAudioPlayTimelyObserver = getCurrentTimeFromSamples(currentSeekIndex + 1)
-            
+            print("正在播放:\(ddAudioPlayTimelyObserver)")
             buttonDelegate.recordTryPlaying!()
         }
     }
