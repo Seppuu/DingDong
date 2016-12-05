@@ -65,9 +65,9 @@ class DDImagesAttachmentView: UIView {
         
         
         addSubview(dismissButton)
-        dismissButton.snp_makeConstraints { (make) in
+        dismissButton.snp.makeConstraints { (make) in
             make.centerX.equalTo(self)
-            make.bottom.equalTo(self.snp_bottom).offset(-44)
+            make.bottom.equalTo(self.snp.bottom).offset(-44)
             make.width.height.equalTo(50)
         }
         

@@ -187,7 +187,7 @@ class JsonManager: NSObject {
         
         //delelte old data
         try! realm.write {
-            let result = realm.objects(Album)
+            let result = realm.objects(Album.self)
             realm.delete(result)
         }
         

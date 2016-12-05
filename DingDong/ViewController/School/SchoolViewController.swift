@@ -109,7 +109,7 @@ class SchoolViewController: BaseViewController ,UITableViewDelegate,UITableViewD
     func shouldShowDot() {
         
         let realm = try! Realm()
-        let lessonResutls = realm.objects(Lesson).filter("released == false")
+        let lessonResutls = realm.objects(Lesson.self).filter("released == false")
         if lessonResutls.count > 0 {
             showDot = true
             dot.alpha = 1.0

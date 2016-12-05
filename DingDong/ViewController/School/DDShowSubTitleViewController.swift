@@ -27,7 +27,7 @@ class DDShowSubTitleViewController: BaseViewController ,UITextViewDelegate{
     func setTextView() {
         
         view.addSubview(textView)
-        textView.snp_makeConstraints { (make) in
+        textView.snp.makeConstraints { (make) in
             
             make.left.top.right.bottom.equalTo(view)
         }

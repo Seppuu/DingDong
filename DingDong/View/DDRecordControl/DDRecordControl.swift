@@ -196,7 +196,7 @@ class DDRecordControl: UIView {
         buttonContainer.isUserInteractionEnabled = true
         buttonContainer.snp.makeConstraints { (make) in
             make.left.right.equalTo(self)
-            make.bottom.equalTo(self).constraint
+            make.bottom.equalTo(self)
             make.height.equalTo(48)
         }
         buttonContainer.backgroundColor = UIColor ( red: 0.9566, green: 0.9565, blue: 0.9565, alpha: 1.0 )
@@ -238,7 +238,7 @@ class DDRecordControl: UIView {
         microButton.addTarget(self, action: #selector(DDRecordControl.voiceRecord), for: .touchUpInside)
         
         //剪辑按钮
-        trimButton.snp_makeConstraints { (make) in
+        trimButton.snp.makeConstraints { (make) in
             make.right.equalTo(buttonContainer.snp.right).offset(-rightMargin)
             make.centerY.equalTo(buttonContainer.snp.centerY)
             make.width.equalTo(buttonWidth)
@@ -250,7 +250,7 @@ class DDRecordControl: UIView {
         
         
         //"取消"按钮,和"剪辑"一个位置
-        trimCancelButton.snp_makeConstraints { (make) in
+        trimCancelButton.snp.makeConstraints { (make) in
             make.right.equalTo(buttonContainer.snp.right).offset(-rightMargin)
             make.centerY.equalTo(buttonContainer.snp.centerY)
             make.width.equalTo(buttonWidth)
@@ -617,20 +617,8 @@ class DDRecordControl: UIView {
             
             self.tryPlaySlider.value = Float(currentTime)
             
-           
-            // += 0.01
-            
-            //let currentDouble = Double(currentTime)
-            
-            //let d = Decimal.init
-            
             let currentSeekIndex = turnFloatTimeToSampleIndex(Float(currentTime))
             waveView.updateWaveViewColor(currentSeekIndex)
-            //播放进度超过屏幕宽度之后,需要移动波形图.
-            let playedWidth = CGFloat((currentSeekIndex + 1) * (4 + 2))
-            if playedWidth >= screenWidth {
-                waveView.sampleView.makeAnime()
-            }
             
             //Index 0 based
             guard currentTime >= 0.25 else {return}
@@ -645,8 +633,14 @@ class DDRecordControl: UIView {
             
             aCount = 0
             
-            //从波形位置来统计时间.4个等于1秒.
-            ddAudioPlayTimelyObserver = getCurrentTimeFromSamples(currentSeekIndex + 1)
+            //播放进度超过屏幕宽度之后,需要移动波形图.
+            let playedWidth = CGFloat((currentSeekIndex + 1) * (4 + 2))
+            if playedWidth >= screenWidth {
+                waveView.sampleView.makeAnime()
+            }
+            
+            //这里不需要从波形图位置来获取一个时间,直接使用计时器累计
+            ddAudioPlayTimelyObserver += 0.25
             print("正在播放:\(ddAudioPlayTimelyObserver)")
             buttonDelegate.recordTryPlaying!()
         }
@@ -744,6 +738,9 @@ class DDRecordControl: UIView {
             waveView.indicatorView.alpha = 1.0
             waveView.indicatorView.center.x = self.frame.size.width - 4*(4+2)
             
+            //筛选器所在的时间.
+            waveView.currentTimeLabel.alpha = 1.0
+            waveView.currentTimeLabel.center.x = waveView.indicatorView.center.x
             //获取起始位置和重点位置.更新波形图颜色.
             let beginIndex = waveView.trimEndCellIndex - 4 //因为4个cell代表一秒
             let endIndex = waveView.trimEndCellIndex
@@ -888,7 +885,7 @@ class DDRecordControl: UIView {
             }
             else {
                 state = .recordPrepare
-                buttonDelegate.recordTap?()//TODO:3秒倒计时.
+                buttonDelegate.recordTap?()//3秒倒计时.
             }
             
             
@@ -959,6 +956,10 @@ class DDRecordControl: UIView {
             let currentSeekIndex = Int(microSeconds * 4) - 1
             guard currentSeekIndex >= 0 else {return}
             waveView.updateWaveViewColor(currentSeekIndex)
+            
+            //更新当前的全局录音计时器的时间
+            ddAudioPlayTimelyObserver = getCurrentTimeFromSamples(currentSeekIndex + 1)
+            
         }
         
     }
@@ -1012,6 +1013,7 @@ class DDRecordControl: UIView {
         trimButton.alpha             = 1.0
         
         waveView.indicatorView.alpha = 0.0
+        waveView.currentTimeLabel.alpha = 0.0
         trimConfirmButton.alpha      = 0.0
         trimCancelButton.alpha       = 0.0
         tryPlaySlider.alpha          = 0.0
@@ -1028,6 +1030,7 @@ class DDRecordControl: UIView {
         tryPlaySlider.alpha     = 0.0
         
         waveView.indicatorView.alpha = 0
+        waveView.currentTimeLabel.alpha = 0.0
         
         if ((updateTimerInPlay) != nil){
             updateTimerInPlay.invalidate()
@@ -1069,6 +1072,7 @@ class DDRecordControl: UIView {
         trimConfirmButton.alpha      = 0.0
         trimCancelButton.alpha       = 0.0
         waveView.indicatorView.alpha = 0.0
+        waveView.currentTimeLabel.alpha = 0.0
         
         tryPlaySlider.value          = 0.0
         waveView.aInt                = 0
@@ -1080,7 +1084,7 @@ class DDRecordControl: UIView {
         
         UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseOut, animations: {
             
-            self.waveViewBottomConstraint?.updateOffset(amount: 0)
+            self.waveViewBottomConstraint?.update(offset: 0)
             self.waveView.layoutIfNeeded()
             
             }, completion: nil)
@@ -1136,10 +1140,10 @@ class DDRecordControl: UIView {
         
         tryPlayButton.setImage(UIImage(named: "trimPlay"), for: UIControlState())
         
-        //TODO:剪辑的时候,将波形图抬高
+        //剪辑的时候,将波形图抬高
         UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseOut, animations: {
             
-            self.waveViewBottomConstraint?.updateOffset(amount: -self.waveView.frame.size.height/2)
+            self.waveViewBottomConstraint?.update(offset:  -self.waveView.frame.size.height/2)
             self.waveView.layoutIfNeeded()
             }, completion: nil)
         
@@ -1379,6 +1383,15 @@ class DDRecordControl: UIView {
         waveView.sampleView.sampleCollectionView.scrollToItem(at: IndexPath(item: (self.sampleValues.count - 1), section: 0), at: .right, animated: false)
     }
     
+    func pullWaveToLeft() {
+        
+        waveView.refreshSampleView(4, lineSpacing: 2, sampleVals: sampleValues)
+        
+        guard self.sampleValues.count > 0 else {return}
+        
+        waveView.sampleView.sampleCollectionView.scrollToItem(at: IndexPath(item: (self.sampleValues.count - 1), section: 0), at: .left, animated: false)
+    }
+    
     
 
 }
@@ -1440,22 +1453,37 @@ extension DDRecordControl:DDWaveViewDelegate {
         
         
         //更新时间显示.最大值是当前位置.
-        let pauseSeconds = self.tryPlaySlider.value //注意时间不再是 0.1 * 10
+        var pauseTimeMicroSeconds:Float = 0.0
+        //如果没有试听直接点击了剪辑,那么直接滚到最后一秒.
+        if (self.tryPlaySlider.value == 0.0) {
+            //使用毫秒来操作.
+            refreshPlaySlider()
+            pauseTimeMicroSeconds = self.tryPlaySlider.maximumValue
+        }
+        else {
+            //获取结束的时间点.
+            pauseTimeMicroSeconds = self.tryPlaySlider.value
+        }
 
-        let pauseMin = Int(pauseSeconds / 60 )
-        let pauseSec = Int(pauseSeconds) - pauseMin * 60
+
+        let pauseMin = Int(pauseTimeMicroSeconds / 60 )
+        let pauseSec = Int(pauseTimeMicroSeconds) - pauseMin * 60
         
         let currentMin = Int(beginSeconds / 60)
         let currentSec = Int(beginSeconds) - currentMin * 60
         
         timeLabel.text = String(format: "%02d:%02d/%02d:%02d", currentMin,currentSec,pauseMin ,pauseSec)
         
+        //更新当前裁剪时间
+        waveView.currentTimeLabel.text = String(format: "%02d:%02d", currentMin,currentSec )
+        waveView.currentTimeLabel.center.x = waveView.indicatorView.center.x
+
         //更新波形图颜色
         waveView.updateMiddleWaveViewColor(beginIndex, endIndex: waveView.trimEndCellIndex)
         
         //确定起点和终点时间,给选播,剪切做准备.beginTimeMicroSeconds  pauseTimeMicroSeconds
         self.startSec = beginSeconds
-        self.pauseEndSec = pauseSeconds
+        self.pauseEndSec = pauseTimeMicroSeconds
         
         print((startSec))
         
@@ -1497,14 +1525,13 @@ extension DDRecordControl:DDWaveViewDelegate {
                 
             
             case LaunchType.closeImage:
-                try! realm.write {
-                    point.conflictWithRecordTrim = false //图片关闭在时刻在波形图上不显示,不算冲突.
-                }
-                
+//                try! realm.write {
+//                    point.conflictWithRecordTrim = false //图片关闭在时刻在波形图上不显示,不算冲突.
+//                }
+                self.waveView.setColorForSingleCell(cellIndex, color: UIColor.ddWaveWithImageTimeColor())
                 
             case LaunchType.defaultMode:break
              
-            default:break
             }
             
             
@@ -1523,11 +1550,11 @@ extension DDRecordControl:DDWaveViewDelegate {
                 ponit.conflictWithRecordTrim = false
             }
             
-            
-            if !(ponit.launchType == LaunchType.closeImage) {
-                
-                self.waveView.setColorForSingleCell(cellIndex, color: UIColor.ddWaveAttachedColor())
-            }
+            self.waveView.setColorForSingleCell(cellIndex, color: UIColor.ddWaveAttachedColor())
+//            if !(ponit.launchType == LaunchType.closeImage) {
+//                
+//                self.waveView.setColorForSingleCell(cellIndex, color: UIColor.ddWaveAttachedColor())
+//            }
             
         }
     }
@@ -1571,8 +1598,8 @@ extension DDRecordControl: AVAudioPlayerDelegate {
             //audioPlayedDuration = 0
             state = .finishRecord
             updateTimerInPlay.invalidate()
-            waveView.resetSamplePosition()
-            
+            //waveView.resetSamplePosition()
+            pullWaveToLeft()
             print("audioPlayerDidFinishPlaying: \(flag)")
         }
         closeAudioPlay()

@@ -47,8 +47,11 @@ class CountDownView: UIView {
     
     func show(_ time:Int) {
         countNumber = time
+        //开始动画+结束动画的时间是0.5 + 0.5 所以去掉
+        //countNumber -= 1
+        self.beginCount()
         self.transform = CGAffineTransform(scaleX: 3.5, y: 3.5)
-        UIView.animate(withDuration: 0.7, delay: 0,
+        UIView.animate(withDuration: 0.5, delay: 0,
                                    usingSpringWithDamping: 0.7,
                                    initialSpringVelocity: 3,
                                    options: UIViewAnimationOptions(),
@@ -56,7 +59,7 @@ class CountDownView: UIView {
                                     self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                                     self.alpha = 1.0
         }){ (success) in
-           self.beginCount()
+           
         }
     }
     
@@ -67,7 +70,7 @@ class CountDownView: UIView {
             timer.invalidate()
             self.transform = CGAffineTransform.identity
             
-            UIView.animate(withDuration: 0.7, delay: 0,
+            UIView.animate(withDuration: 0.5, delay: 0,
                                        usingSpringWithDamping: 0.7,
                                        initialSpringVelocity: 3,
                                        options: UIViewAnimationOptions(),

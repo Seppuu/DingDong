@@ -56,7 +56,7 @@ class DDPPTStyleViewController: BaseViewController {
     func getTheme() {
         let realm = try! Realm()
         //try get theme from realm then update theme from back
-        let result = realm.objects(Theme)
+        let result = realm.objects(Theme.self)
         //将主题保存进realm数据库
         if result.count > 0 {
             listOfTheme = Array(result)

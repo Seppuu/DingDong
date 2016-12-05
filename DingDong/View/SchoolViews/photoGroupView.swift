@@ -70,7 +70,7 @@ class photoGroupView: UIView,UICollectionViewDelegate,UICollectionViewDelegateFl
     func setSliderView() {
         
         addSubview(sliderView)
-        sliderView.snp_makeConstraints { (make) in
+        sliderView.snp.makeConstraints { (make) in
             make.left.equalTo(collectionView)
             make.bottom.equalTo(self)
             make.width.equalTo(150)

@@ -71,7 +71,7 @@ class LessonsReleasedViewController: BaseViewController {
         
             guard let realm = try? Realm() else {return}
             
-            self.albums = Array(realm.objects(Album))
+            self.albums = Array(realm.objects(Album.self))
             if self.albums.count > 0 {
                 
                 DispatchQueue.main.async {

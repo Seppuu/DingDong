@@ -35,6 +35,8 @@ class DDWaveView: UIView {
     var startCellIndex:Int = 0
     var pauseEndCellIndex:Int = 0
     var sampleValuesForPlay : [Float] = []
+    
+    var currentTimeLabel:UILabel!
 
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
@@ -48,7 +50,7 @@ class DDWaveView: UIView {
         
         sampleView = VoiceRecordSampleView()
         addSubview(sampleView)
-        sampleView.snp_makeConstraints { (make) -> Void in
+        sampleView.snp.makeConstraints { (make) in
             make.left.top.right.bottom.equalTo(self)
         }
         
@@ -61,7 +63,7 @@ class DDWaveView: UIView {
             indicatorViewCenterXCons =  make.centerX.equalTo(self).constraint
             make.center.equalTo(sampleView)
             make.height.equalTo(sampleView)
-            make.width.equalTo(100)
+            make.width.equalTo(400)
         }
         
         indicatorView.image = UIImage(named: "voice_indicator")
@@ -73,6 +75,22 @@ class DDWaveView: UIView {
         indicatorView.addGestureRecognizer(panGesture)
         
         indicatorView.alpha = 0.0 //默认隐藏
+        
+        //滑动的线上的当前时间label
+        currentTimeLabel = UILabel()
+        addSubview(currentTimeLabel)
+        currentTimeLabel.snp.makeConstraints { (make) in
+            
+            make.bottom.equalTo(indicatorView.snp.top)
+            make.width.equalTo(150)
+            make.height.equalTo(21)
+            make.centerX.equalTo(indicatorView)
+        }
+        currentTimeLabel.font = UIFont.systemFont(ofSize: 12)
+        currentTimeLabel.textColor = UIColor.gray
+        currentTimeLabel.alpha = 0.0
+        currentTimeLabel.textAlignment = .center
+        currentTimeLabel.text = "00:00"
     }
     
     func refreshSampleView(_ itemWidth:CGFloat,lineSpacing:CGFloat,sampleVals:[Float]) {
@@ -99,6 +117,8 @@ class DDWaveView: UIView {
         
         
         let point = sender.translation(in: self)
+        
+        
         
         //如果剪切的时间点太小,向右移动波形图.
         if (pauseTimeTooSmall) {
@@ -160,6 +180,8 @@ class DDWaveView: UIView {
         //获取指示器所在位置对于cell的位置.
         let cellIndexX = (sender.view?.center.x)! + sampleView.sampleCollectionView.contentOffset.x
         self.getBeginCellIndex(cellIndexX)
+        
+        
     }
     
     func scrollRight(_ timer:Timer) {
@@ -277,7 +299,7 @@ class DDWaveView: UIView {
         //颜色重置
         for i in 0..<sampleView.sampleValues.count {
             
-            if let cell:VoiceRecordSampleCell =  sampleView.sampleCollectionView.cellForItem(at: IndexPath(item: i, section: 0)) as? VoiceRecordSampleCell {
+            if let cell:VoiceRecordSampleCell = sampleView.sampleCollectionView.cellForItem(at: IndexPath(item: i, section: 0)) as? VoiceRecordSampleCell {
 
                     cell.color = UIColor.ddWaveDefaultColor()
                 

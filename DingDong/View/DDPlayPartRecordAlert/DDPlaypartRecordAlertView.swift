@@ -40,7 +40,7 @@ class DDPlaypartRecordAlertView: UIView {
     
     func makeUI() {
         addSubview(timeTextLabel)
-        timeTextLabel.snp_makeConstraints { (make) -> Void in
+        timeTextLabel.snp.makeConstraints { (make) in
             make.left.top.right.equalTo(self)
             make.height.equalTo(30)
         }
@@ -51,8 +51,8 @@ class DDPlaypartRecordAlertView: UIView {
         timeTextLabel.text = "00:00/00:00"
         
         addSubview(imageView)
-        imageView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(timeTextLabel.snp_bottom)
+        imageView.snp.makeConstraints { (make)  in
+            make.top.equalTo(timeTextLabel.snp.bottom)
             make.left.right.bottom.equalTo(self)
         }
         imageView.clipsToBounds = true
@@ -60,7 +60,7 @@ class DDPlaypartRecordAlertView: UIView {
         
         
         addSubview(countLabel)
-        countLabel.snp_makeConstraints { (make) -> Void in
+        countLabel.snp.makeConstraints { (make)  in
             make.left.right.top.bottom.equalTo(imageView)
         }
         

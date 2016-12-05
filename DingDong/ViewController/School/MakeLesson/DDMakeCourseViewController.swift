@@ -313,7 +313,7 @@ class DDMakeCourseViewController: BaseViewController {
         UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {
             
             self.topViewTopConstraint.constant = 0
-            self.recordControlBottomCons?.updateOffset(amount: 0)
+            self.recordControlBottomCons?.update(offset: 0)
             self.addTextButton.alpha = 1.0
             self.photoButton.alpha = 1.0
             self.view.layoutIfNeeded()
@@ -525,8 +525,8 @@ class DDMakeCourseViewController: BaseViewController {
     func animteTextEdit(_ showText:Bool) {
         // show text or record
         UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: {
-            self.recordControlBottomCons?.updateOffset( amount: showText ? 150 : 0 )
-            self.textEditViewBottomCons?.updateOffset ( amount: showText ? 0 : 48 )
+            self.recordControlBottomCons?.update(offset: showText ? 150 : 0)
+            self.textEditViewBottomCons?.update (offset: showText ? 0 : 48 )
             self.textEditView.layoutIfNeeded()
             self.recordControl.layoutIfNeeded()
                 
@@ -736,7 +736,7 @@ extension DDMakeCourseViewController {
     func openImagesView() {
         
         imagesAttachView.photos = page.recordPhotos
-        imagesAttachView.dismissButton.alpha = 0.0
+        imagesAttachView.dismissButton.alpha = 1.0
         imagesAttachView.collectionView.isScrollEnabled = false
         imagesAttachView.collectionView.reloadData()
         view.bringSubview(toFront: imagesAttachView)
@@ -747,7 +747,7 @@ extension DDMakeCourseViewController {
     
     func closeImagesView() {
         
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
             self.imagesAttachView.alpha = 0.0
             }, completion: nil)
     }
@@ -797,7 +797,7 @@ extension DDMakeCourseViewController {
         view.bringSubview(toFront: textEditView)
         //向上,向下移动编辑框
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn, animations: {
-            self.textEditViewBottomCons?.updateOffset(amount: putUp ? -keyboardHeight : 0)
+            self.textEditViewBottomCons?.update(offset: putUp ? -keyboardHeight : 0)
             self.textEditView.layoutIfNeeded()
         }) { (Bool) in
             
@@ -1029,7 +1029,7 @@ extension DDMakeCourseViewController: DDTextEditViewDelegate {
             delay(0.05, closure: {
                 
                 aView.addSubview(fontView)
-                fontView.snp_makeConstraints({ (make) in
+                fontView.snp.makeConstraints({ (make) in
                     make.left.top.bottom.right.equalTo(aView)
                 })
                 
@@ -1075,7 +1075,7 @@ extension DDMakeCourseViewController: DDTextEditViewDelegate {
             delay(0.05, closure: {
                 
                 aView.addSubview(colorView)
-                colorView.snp_makeConstraints({ (make) in
+                colorView.snp.makeConstraints({ (make) in
                     make.left.top.bottom.right.equalTo(aView)
                 })
                 
@@ -1134,7 +1134,7 @@ extension DDMakeCourseViewController: DDTextEditViewDelegate {
             delay(0.05, closure: {
                 
                 aView.addSubview(animeView)
-                animeView.snp_makeConstraints({ (make) in
+                animeView.snp.makeConstraints({ (make) in
                     make.left.top.bottom.right.equalTo(aView)
                 })
                 
@@ -1298,6 +1298,7 @@ extension DDMakeCourseViewController: DDRecordControlActionDelegate {
         //试播前，将图片重置到第一张，试播结束之后，回到原来位置
         guard page.recordPhotos.count > 0 else {return}
         moveImage(0)
+        
     }
     
     func recordTryPlaying() {
@@ -1336,7 +1337,6 @@ extension DDMakeCourseViewController: DDRecordControlActionDelegate {
             alertView?.changeImageViewImage(image, imageIndex: index.value! + 1)
             
         }
-        
         
         let currentSeconds = Int(time)
         let currentMin = Int(currentSeconds / 60 )
@@ -1454,28 +1454,39 @@ extension DDMakeCourseViewController: DDRecordControlDelegate {
         let realm = try! Realm()
         self.page.playQueue.forEach {
             
-            //"关闭"时间戳不会被打上冲突标记.
+            //"关闭"时间戳会被打上冲突标记.但是并不删除它
             if  $0.conflictWithRecordTrim {
                 
                 //如果即将删除的这个点的下一个点就是"关闭"的时间戳,那么,将关闭的时间戳置于剪切开始的时间点上.
-                let nextIndex = self.page.playQueue.index(of: $0)! + 1
-                //确保nextIndex在数量范围内
-                if nextIndex <= self.page.playQueue.count - 1 {
-                    //且是"关闭"队列
-                    if (self.page.playQueue[nextIndex].launchType == LaunchType.closeImage ) {
-                        
-                        try! realm.write {
-                           self.page.playQueue[nextIndex].time = starTime
-                        }
-                        
-                    }
-                }
+                //这里的开始时间加入是4.75.剪切之后由于误差,只有4.5s.那么关闭将不会触发.
+                //再往前移动0.5秒的时间.
+//                let nextIndex = self.page.playQueue.index(of: $0)! + 1
+//                //确保nextIndex在数量范围内
+//                if nextIndex <= self.page.playQueue.count - 1 {
+//                    //且是"关闭"队列
+//                    if (self.page.playQueue[nextIndex].launchType == LaunchType.closeImage ) {
+//                        
+//                        try! realm.write {
+//                           self.page.playQueue[nextIndex].time = starTime - 0.5
+//                            print("关闭时间重置为:\(starTime - 0.5)")
+//                        }
+//                        
+//                    }
+//                }
                 
                 let index = self.page.playQueue.index(of: $0)
                 
-                try! realm.write {
-                    self.page.playQueue.remove(at: index!)
+                if $0.launchType == .closeImage {
+                    //如果是关闭的时间点,不移除出播放队列
                 }
+                else {
+                    try! realm.write {
+                        self.page.playQueue.remove(at: index!)
+                    }
+                    
+                    print("被移出的冲突时间点是:\($0.time)")
+                }
+                
                 
                 //处理文本框
                 if  $0.launchType == .showText  {
@@ -1487,7 +1498,6 @@ extension DDMakeCourseViewController: DDRecordControlDelegate {
                 }
                 
                 
-                //print("被移出的冲突时间点是:\($0.time)")
             }
         }
         
@@ -1495,10 +1505,20 @@ extension DDMakeCourseViewController: DDRecordControlDelegate {
             //将剪切起点之后的时间戳向前移动一段时间.
             self.page.playQueue.forEach {
                 
-                //这里的比较是大于.确保遗留下来的"关闭"的时间戳,不会被设置成错误的触发时间.
-                guard $0.time > starTime else { return }
+                //如果是关闭时间的点
+                //假如这里的开始时间加入是4.75.剪切之后由于误差,只有4.5s.那么关闭将不会触发.
+                //再往前移动1.0秒的时间.
                 
-                $0.time -= (endTime - starTime)
+                //问题是,可能存在多个关闭时间戳,只对最后一个关闭时间戳做该处理(最后一个时间戳肯定是关闭类型)
+                if $0 == self.page.playQueue.last {
+                    $0.time = starTime - 1.0
+                }
+                else {
+                    //这里的比较是大于.确保遗留下来的"关闭"的时间戳,不会被设置成错误的触发时间.
+                    guard $0.time > starTime else { return }
+                    
+                    $0.time -= (endTime - starTime)
+                }
                 
             }
             

@@ -75,7 +75,7 @@ class DDTextColorEditView: UIView {
             let view = UIView()
             buttons[i].addSubview(view)
             buttons[i].backgroundColor = UIColor.white
-            view.snp_makeConstraints({ (make) in
+            view.snp.makeConstraints({ (make) in
                 make.center.equalTo(buttons[i])
                 make.width.height.equalTo(26)
             })
@@ -91,7 +91,7 @@ class DDTextColorEditView: UIView {
             checkView.tag = 10
             checkView.contentMode = .scaleAspectFit
             buttons[i].addSubview(checkView)
-            checkView.snp_makeConstraints({ (make) in
+            checkView.snp.makeConstraints({ (make) in
                 make.center.equalTo(buttons[i])
                 make.width.equalTo(16)
                 make.height.equalTo(12)
