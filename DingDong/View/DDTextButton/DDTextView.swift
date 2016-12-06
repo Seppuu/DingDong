@@ -64,6 +64,8 @@ class DDTextView: UITextView  {
     
     var hasShowTime = false
     
+    var shouldRemove = false
+    
     var moveDisable = false
     
     var originFrame = CGRect()

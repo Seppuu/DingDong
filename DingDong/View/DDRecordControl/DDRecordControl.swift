@@ -687,6 +687,7 @@ class DDRecordControl: UIView {
             else {
                 //获取结束的时间点.
                 pauseTimeMicroSeconds = self.tryPlaySlider.value
+                
             }
             
             //将波形图定位到结束的时间点,并且放置在左侧.
@@ -767,7 +768,15 @@ class DDRecordControl: UIView {
             
             let start = self.startSec
             //注意,当直接剪切的时候,按照规则,结束时间点应该是最末的时间,但是这里pauseEndSec,是0.0 理论上,这个0.0是不可能在剪切时出现的.它的默认值应该是录音总时长
-            let end = self.pauseEndSec
+            var end = self.pauseEndSec
+            
+            if self.tryPlaySlider.value == 0.0 {
+                end = 0.0
+            }
+            else {
+                
+            }
+            
             trimAudioByHelper(start, end:end)
         }
     }

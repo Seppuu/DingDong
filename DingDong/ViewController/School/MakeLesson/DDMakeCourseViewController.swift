@@ -285,11 +285,14 @@ class DDMakeCourseViewController: BaseViewController {
         
         //更新文本框,如果有.
         addTextViewFromPage()
+      
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -359,11 +362,7 @@ class DDMakeCourseViewController: BaseViewController {
         
     }
     
-    
-    
-    
     //MARK: Text Action
-    
     func addTextView(_ sender:UIButton) {
 
         let textView = DDTextView(frame: CGRect(x: 0, y: 0, width: 50 + 40, height: 37))
@@ -491,9 +490,11 @@ class DDMakeCourseViewController: BaseViewController {
     
     func deleteTextViewBy(_ index:Int) {
         
-        let textView = page.ddTextViews[index]
-        remove(textView)
+        let view = page.ddTextViews[index]
+        
+        remove(view)
     }
+    
     
     func remove(_ textView:DDTextView) {
         
@@ -507,6 +508,7 @@ class DDMakeCourseViewController: BaseViewController {
         page.ddTextViews.forEach {
             
             $0.viewIndex = page.ddTextViews.index(of: $0)!
+            
         }
         
     }
@@ -767,10 +769,11 @@ extension DDMakeCourseViewController {
         
         keyboardMan.animateWhenKeyboardAppear = { [weak self] appearPostIndex, keyboardHeight, keyboardHeightIncrement in
             
-            // print("appear \(appearPostIndex), \(keyboardHeight), \(keyboardHeightIncrement)\n")
+            print("appear, \(keyboardHeight)\n")
             
             if let strongSelf = self {
                 strongSelf.moveTextEditView(keyboardHeight,putUp: true)
+                
                 strongSelf.keyboardActive = true
                 strongSelf.moveTextViewAndBackImageIfNeed(keyboardHeight,putUp:true)
                 strongSelf.currentKeyBoardHeight = keyboardHeight
@@ -780,10 +783,11 @@ extension DDMakeCourseViewController {
         
         keyboardMan.animateWhenKeyboardDisappear = { [weak self] keyboardHeight in
             
-            // print("disappear \(keyboardHeight)\n")
+            print("disappear \(keyboardHeight)\n")
             
             if let strongSelf = self {
                 strongSelf.moveTextEditView(keyboardHeight,putUp: false)
+                
                 strongSelf.keyboardActive = false
                 strongSelf.moveTextViewAndBackImageIfNeed(keyboardHeight,putUp:false)
                 strongSelf.currentKeyBoardHeight = keyboardHeight
@@ -796,29 +800,33 @@ extension DDMakeCourseViewController {
         //将编辑框至于子view最上层.
         view.bringSubview(toFront: textEditView)
         //向上,向下移动编辑框
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn, animations: {
-            self.textEditViewBottomCons?.update(offset: putUp ? -keyboardHeight : 0)
-            self.textEditView.layoutIfNeeded()
-        }) { (Bool) in
-            
-        }
+        self.textEditViewBottomCons?.update(offset: putUp ? -keyboardHeight : 48)
         
     }
     
     
     func moveTextViewAndBackImageIfNeed(_ keyboardHeight:CGFloat,putUp:Bool) {
         
+        //确保view的位置正常,保证动画出现.
+        self.view.layoutIfNeeded()
+        self.view.setNeedsFocusUpdate()
         //查看当前编辑的TextView的位置是否在键盘位置一下,注意加上文本编辑框的高度
         if putUp {
             
-            let textEditHeight = textEditView.frame.size.height
+            //let textEditHeight = textEditView.frame.size.height
+            let textEditHeight:CGFloat = 48
             
             //因为是bigContainerView的子View.所以算上它.
-            
             guard let avtiveTextView = getTheActiveTextView() else {return}
             let bottomPoint    = avtiveTextView.frame.size.height + avtiveTextView.frame.origin.y + self.bigContainerView.frame.origin.y
             
-            guard bottomPoint > self.bigContainerView.frame.size.height - (keyboardHeight + textEditHeight) else {  moveHeight = 0;return}
+            if bottomPoint > self.bigContainerView.frame.size.height - (keyboardHeight + textEditHeight)  {
+                
+            }
+            else {
+                moveHeight = 0
+                return
+            }
             
             //需要移动,计算移动高度,移动所有文本框和背景图片
             moveHeight =  bottomPoint - ( self.bigContainerView.frame.size.height - (keyboardHeight + textEditHeight))
@@ -861,7 +869,9 @@ extension DDMakeCourseViewController: DDTextViewDelegate {
         
         //隐藏其他文本框的边框
         highLightActiveTextView(textView)
-        
+        if keyboardActive {
+            moveTextViewAndBackImageIfNeed(currentKeyBoardHeight!, putUp: true)
+        }
     }
     
     
@@ -954,7 +964,6 @@ extension DDMakeCourseViewController: DDTextViewDelegate {
     
     
     func DDTextViewEndMove(_ textView: DDTextView) {
-        
         
         if coordinateLine.alpha == 1.0  &&  coordinateLine.superview == self.view {
             
@@ -1098,6 +1107,7 @@ extension DDMakeCourseViewController: DDTextEditViewDelegate {
         
     }
     
+    //动画
     func TextEditViewAnimationButtonTap(_ buttonCenter: CGPoint) {
         
         // Show a pop view for color choose
@@ -1164,6 +1174,7 @@ extension DDMakeCourseViewController: DDTextEditViewDelegate {
         }
         
     }
+    
     
     func TextEditViewDeleteButtonTap() {
         
@@ -1485,21 +1496,52 @@ extension DDMakeCourseViewController: DDRecordControlDelegate {
                     }
                     
                     print("被移出的冲突时间点是:\($0.time)")
+                    //如果是文本框时间点.
+                    if  $0.launchType == .showText {
+                        
+                        //这个index是在textViews中的顺序
+                        if let index = $0.indexShowText.value {
+                            
+                            try! realm.write {
+                                
+                                self.page.playQueue.forEach({ (textTimeStamp) in
+                                    //更新时间戳中对应的文本框的index
+                                    if let indexRemind = textTimeStamp.indexShowText.value {
+                                        
+                                        if indexRemind > index {
+                                            
+                                                //在数据库中操作
+                                                textTimeStamp.indexShowText.value = indexRemind - 1
+                                            
+                                            
+                                        }
+                                        
+                                    }
+                                    
+                                })
+                            
+                            }
+                            
+                        }
+                        
+                        
+                    }
+                    
                 }
-                
-                
+                 
                 //处理文本框
                 if  $0.launchType == .showText  {
                     
-                    let index = $0.indexShowText.value
-                    
-                    self.deleteTextViewBy(index!)
+                    if let index = $0.indexShowText.value {
+                        
+                       deleteTextViewBy(index)
+                    }
                     
                 }
-                
-                
+  
             }
         }
+        
         
         try! realm.write {
             //将剪切起点之后的时间戳向前移动一段时间.
