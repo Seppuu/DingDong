@@ -354,17 +354,23 @@ class DDTextView: UITextView  {
                 self.isEditable = false
                
                 self.DDdelegate.DDTextViewFadeEnded(self.viewIndex)
-                
         })
 
     }
-
     
     func displayTextViewByTime() {
         
         let animeHanler = DDTextAnimeHandler()
         animeHanler.animeStyle = DDTextAnimeHandler.AnimeStyle(rawValue: animeIndex)!
         animeHanler.chooseAnimationFor(self)
+        
+        animeHanler.animeDidStopHandler = {
+            
+            if self.animeIndex == 3 {
+                self.layer.mask = nil
+            }
+            
+        }
     
     }
     

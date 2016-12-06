@@ -53,14 +53,8 @@
                                     <constraint firstItem="MOD-3l-bjp" firstAttribute="leading" secondItem="dte-vo-2g9" secondAttribute="leading" constant="8" id="SFb-rC-VVO"/>
                                     <constraint firstAttribute="bottom" secondItem="MOD-3l-bjp" secondAttribute="bottom" id="Trc-LN-mz2"/>
                                     <constraint firstAttribute="width" constant="600" id="lzQ-Dw-60h"/>
-                                    <constraint firstItem="MOD-3l-bjp" firstAttribute="top" secondItem="dte-vo-2g9" secondAttribute="top" constant="17" id="n1U-jC-mMV"/>
                                     <constraint firstItem="hsa-Ok-qP3" firstAttribute="centerX" secondItem="dte-vo-2g9" secondAttribute="centerX" id="t8w-xY-aFB"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="n1U-jC-mMV"/>
-                                    </mask>
-                                </variation>
                             </view>
                         </subviews>
                         <constraints>
@@ -70,8 +64,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backBarItem" destination="MOD-3l-bjp" id="eu0-PU-dcn"/>
                         <outlet property="titleLabel" destination="hsa-Ok-qP3" id="DsO-1N-9Ud"/>
                         <outlet property="topView" destination="dte-vo-2g9" id="bvw-7V-aBb"/>
+                        <outlet property="topViewTopCons" destination="vKF-6W-ecm" id="lSs-HV-X4a"/>
                         <outlet property="topViewTopConstraint" destination="vKF-6W-ecm" id="6xr-nj-zuk"/>
                     </connections>
                 </viewController>

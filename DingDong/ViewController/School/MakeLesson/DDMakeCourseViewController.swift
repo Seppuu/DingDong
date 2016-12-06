@@ -12,13 +12,16 @@ import AVFoundation
 import KeyboardMan
 import RMPZoomTransitionAnimator
 import RealmSwift
-import IQKeyboardManagerSwift
 
 class DDMakeCourseViewController: BaseViewController {
     
     @IBOutlet weak var topView: UIView!
     
     @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var backBarItem: UIButton!
+    
+    @IBOutlet weak var topViewTopCons: NSLayoutConstraint!
     
     var timeView: RecordCountView!
     
@@ -248,7 +251,6 @@ class DDMakeCourseViewController: BaseViewController {
     
     func setNavbar() {
         
-        
         topView.layer.shadowOffset = CGSize(width: 0.0, height: 0.5)
         topView.layer.shadowColor  = UIColor ( red: 0.698, green: 0.698, blue: 0.698, alpha: 1.0 ).cgColor
         
@@ -311,6 +313,36 @@ class DDMakeCourseViewController: BaseViewController {
         }
     }
     
+    func showTopView() {
+        
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {
+            
+            self.topViewTopCons.constant = 21 + 22 - self.topView.ddHeight
+            self.backBarItem.alpha = 0.0
+            self.titleLabel.alpha = 0.0
+            self.view.layoutIfNeeded()
+            
+        }) { (Bool) in
+            
+        }
+    }
+    
+    func hideTopView() {
+        
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {
+            
+            self.topViewTopCons.constant = 0
+            self.backBarItem.alpha = 1.0
+            self.titleLabel.alpha = 1.0
+            self.view.layoutIfNeeded()
+            
+        }) { (Bool) in
+            
+        }
+        
+    }
+    
+
     func showTopAndBottomView() {
         
         UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {
@@ -1229,6 +1261,25 @@ extension DDMakeCourseViewController: DDRecordControlActionDelegate {
         countDownView.countDownComplete = { [weak self] in
             self?.recordControl.recordBeigin()
         }
+        
+        
+        addTextButton.alpha = 0.0
+        
+        photoButton.alpha = 0.0
+        
+        showPhotoButton.alpha = 1.0
+        
+        let count = page.recordPhotos.count
+        if count > 0 {
+            countDot.text = "\(count)"
+            countDot.alpha = 1.0
+        }
+        
+        //TODO:移动顶部view,隐藏返回,录音
+        showTopView()
+        
+        
+        
     }
     
     func recordBegin() {
@@ -1248,23 +1299,12 @@ extension DDMakeCourseViewController: DDRecordControlActionDelegate {
         }
 
         
-        addTextButton.alpha = 0.0
-        
-        photoButton.alpha = 0.0
-        
-        showPhotoButton.alpha = 1.0
-        
-        let count = page.recordPhotos.count
-        if count > 0 {
-            countDot.text = "\(count)"
-            countDot.alpha = 1.0
-        }
-        
-        
        // closeButton.alpha = 0.0
         
         // open iFlySpeech
         //iFlyhandler.start()
+        
+        
     }
     
     func recordFinished() {
@@ -1283,6 +1323,8 @@ extension DDMakeCourseViewController: DDRecordControlActionDelegate {
         
         // close iFlySpeech
         //iFlyhandler.stop()
+        
+        hideTopView()
     }
     
     func recordTryPlayBegin() {

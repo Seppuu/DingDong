@@ -44,6 +44,8 @@ class DDTextAnimeHandler: NSObject {
     
     var animeStyle: AnimeStyle = .none
     
+    var animeDidStopHandler:(()->())?
+    
     func chooseAnimationFor(_ view:UIView){
         
         
@@ -187,7 +189,7 @@ class DDTextAnimeHandler: NSObject {
 extension DDTextAnimeHandler:CAAnimationDelegate {
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        
+        animeDidStopHandler?()
     }
 
     
