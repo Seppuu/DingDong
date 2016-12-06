@@ -769,7 +769,7 @@ extension DDMakeCourseViewController {
         
         keyboardMan.animateWhenKeyboardAppear = { [weak self] appearPostIndex, keyboardHeight, keyboardHeightIncrement in
             
-            print("appear, \(keyboardHeight)\n")
+            //print("appear, \(keyboardHeight)\n")
             
             if let strongSelf = self {
                 strongSelf.moveTextEditView(keyboardHeight,putUp: true)
@@ -783,7 +783,7 @@ extension DDMakeCourseViewController {
         
         keyboardMan.animateWhenKeyboardDisappear = { [weak self] keyboardHeight in
             
-            print("disappear \(keyboardHeight)\n")
+           // print("disappear \(keyboardHeight)\n")
             
             if let strongSelf = self {
                 strongSelf.moveTextEditView(keyboardHeight,putUp: false)

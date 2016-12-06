@@ -404,6 +404,8 @@ class DDTextView: UITextView  {
         
         fixSelfXPositionIfNeed()
         updateShimmerView()
+        let size = CGSize(width: self.frame.size.width, height: self.frame.size.height)
+        self.sizeThatFits(size)
     }
     
 }

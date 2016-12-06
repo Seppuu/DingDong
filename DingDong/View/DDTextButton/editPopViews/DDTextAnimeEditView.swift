@@ -137,10 +137,6 @@ class DDTextAnimeEditView: UIView {
                     animeIndex = i + 1
                     animeButtonTapHandler?(animeIndex)
                 }
-                
-                
-                
-
             }
             
         }

@@ -107,18 +107,15 @@ class DDTextAnimeHandler: NSObject {
         let maskLayer = CAShapeLayer()
         maskLayer.fillColor = UIColor.clear.cgColor
         maskLayer.strokeColor = UIColor.black.cgColor
-        
         maskLayer.lineWidth = animeView.bounds.size.height * 2
         
-        
-        let rectPath = CGMutablePath()
-        
         let path = CGMutablePath()
-        rectPath.move(to: CGPoint(x: animeView.layer.bounds.origin.x, y: animeView.layer.bounds.origin.y))
+        path.move(to: CGPoint(x: animeView.layer.bounds.origin.x, y: animeView.layer.bounds.origin.y))
+        
         
         path.addRect(CGRect(x: animeView.layer.bounds.origin.x, y: animeView.layer.bounds.origin.y, width: animeView.layer.bounds.size.width, height: animeView.layer.bounds.size.height))
         
-        maskLayer.path = rectPath
+        maskLayer.path = path
         
         //Start with an empty mask path (draw 0% of the arc)
         maskLayer.strokeEnd = 0.0
@@ -133,11 +130,11 @@ class DDTextAnimeHandler: NSObject {
         
         let swipe = CABasicAnimation(keyPath: "strokeEnd")
         swipe.duration = 2
-        //swipe.delegate = self
+        swipe.delegate = self
         swipe.value(forKey: "swipeAnim")
         
         swipe.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-        swipe.fillMode = kCAFillModeForwards;
+        swipe.fillMode = kCAFillModeForwards
         swipe.isRemovedOnCompletion = false
         swipe.autoreverses = false
         
@@ -187,10 +184,11 @@ class DDTextAnimeHandler: NSObject {
 }
 
 
-extension DDTextAnimeHandler {
+extension DDTextAnimeHandler:CAAnimationDelegate {
     
-//    override func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-//        
-//    }
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        
+    }
+
     
 }
