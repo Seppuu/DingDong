@@ -397,12 +397,14 @@ class DDMakeCourseViewController: BaseViewController {
     //MARK: Text Action
     func addTextView(_ sender:UIButton) {
 
-        let textView = DDTextView(frame: CGRect(x: 0, y: 0, width: 50 + 40, height: 37))
+        let textView = DDTextView(frame: CGRect(x: 0, y: 0, width: 50 + 40, height: 40))
        
         textView.viewIndex = page.ddTextViews.count
 
         textView.DDdelegate = self
         
+        textView.sizeToFit()
+        textView.frame.size.width = 50 + 40
         bigContainerView.addSubview(textView)
         
         // add textView to record arry
@@ -1020,6 +1022,13 @@ extension DDMakeCourseViewController: DDTextViewDelegate {
             
             
         }
+        
+        //判断是否超出边界,如果是.
+        //修正一下
+        
+        textView.fixFrameAfterPan()
+        
+        
     }
     
     
@@ -1277,8 +1286,6 @@ extension DDMakeCourseViewController: DDRecordControlActionDelegate {
         
         //TODO:移动顶部view,隐藏返回,录音
         showTopView()
-        
-        
         
     }
     

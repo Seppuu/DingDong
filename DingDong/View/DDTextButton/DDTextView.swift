@@ -246,11 +246,11 @@ class DDTextView: UITextView  {
             let x = self.frame.origin.x +  p.x
             let width = self.frame.size.width
             
-            if x >= leftMargin  &&  x + width <= rgihtMargin {
+           // if x >= leftMargin  &&  x + width <= rgihtMargin {
                 
                 sender.view?.center = CGPoint(x: centerX, y: centerY)
                 DDdelegate.DDTextViewBeginMove(self, left: x, right: x + width)
-            }
+            //}
             
             originFrame = self.frame
         }
@@ -262,6 +262,16 @@ class DDTextView: UITextView  {
         }
 
         sender.setTranslation(CGPoint.zero, in:self)
+    }
+    
+    func fixFrameAfterPan() {
+        
+        
+        UIView.animate(withDuration: 0.3) {
+            self.fixSelfXPositionIfNeed()
+        }
+        
+        
     }
     
     
@@ -392,26 +402,25 @@ class DDTextView: UITextView  {
     //根据字号变化,调整文本框大小
     func fitSizeWithFontChange() {
         
-        var frame2 = self.frame
-        frame2.size.height = self.contentSize.height
-        self.frame = frame2
+//        var frame2 = self.frame
+//        frame2.size.height = self.contentSize.height
+//        self.frame = frame2
+//        
+//        self.sizeToFit()
+//        
+//        if self.frame.size.width < 50 {
+//            self.frame.size.width = 50
+//        }
+//        else if self.frame.size.width >=  rgihtMargin - self.frame.origin.x - 40  {
+//            self.frame.size.width =  rgihtMargin - self.frame.origin.x
+//        }
+//        else if self.frame.size.width <= rgihtMargin - self.frame.origin.x - 40 {
+//            self.frame.size.width =  self.frame.size.width + 40
+//        }
         
-        self.sizeToFit()
-        
-        if self.frame.size.width < 50 {
-            self.frame.size.width = 50
-        }
-        else if self.frame.size.width >=  rgihtMargin - self.frame.origin.x - 40  {
-            self.frame.size.width =  rgihtMargin - self.frame.origin.x
-        }
-        else if self.frame.size.width <= rgihtMargin - self.frame.origin.x - 40 {
-            self.frame.size.width =  self.frame.size.width + 40
-        }
-        
-        fixSelfXPositionIfNeed()
-        updateShimmerView()
-        let size = CGSize(width: self.frame.size.width, height: self.frame.size.height)
-        self.sizeThatFits(size)
+        self.textViewDidChange(self)
+        //fixSelfXPositionIfNeed()
+        //updateShimmerView()
     }
     
 }
@@ -450,9 +459,14 @@ extension DDTextView : UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         
+       
+        if textView.frame.size.width < 50 {
+            textView.frame.size.width = 50
+        }
         DDdelegate.DDTextViewBeginEdit(self)
         
     }
+
     
     func textViewDidChange(_ textView: UITextView) {
         
@@ -503,7 +517,7 @@ extension DDTextView : UITextViewDelegate {
                 textView.frame.size.width =  textView.frame.size.width + 40
             }
             
-            fixSelfXPositionIfNeed()
+            //fixSelfXPositionIfNeed()
             deleteKeyTap = false
             
             //return
@@ -537,8 +551,8 @@ extension DDTextView : UITextViewDelegate {
             
             newFrame.size = CGSize(width:minWidth, height: max(newSize.height, fixedHeight))
             textView.frame = newFrame
-            textView.frame.size.width =  textView.frame.size.width + 40
-
+            textView.frame.size.width += 40
+            
             
         }
         else {
@@ -554,6 +568,8 @@ extension DDTextView : UITextViewDelegate {
                 newFrame.size = CGSize(width:minWidth, height: max(newSize.height, fixedHeight))
                 textView.frame = newFrame
                 textView.frame.size.width =  textView.frame.size.width + 40
+                
+                
 
             }
             else {
@@ -574,20 +590,35 @@ extension DDTextView : UITextViewDelegate {
         //如果文本框超出了禁止区域,自动贴边.
         fixSelfXPositionIfNeed()
         
-        
         frameFixed = textView.frame
         
         originFrame = self.frame
 
         updateShimmerView()
         
-        DDdelegate.DDTextViewSizeChanged(self, height: self.ddHeight)
     }
 
     
     
     func fixSelfXPositionIfNeed() {
         
+//        var frame2 = self.frame
+//        frame2.size.height = self.contentSize.height
+//        self.frame = frame2
+//        
+//        self.sizeToFit()
+//        
+//        if self.frame.size.width < 50 {
+//            self.frame.size.width = 50
+//        }
+//        else if self.frame.size.width >=  rgihtMargin - self.frame.origin.x - 40  {
+//            self.frame.size.width =  rgihtMargin - self.frame.origin.x
+//        }
+//        else if self.frame.size.width <= rgihtMargin - self.frame.origin.x - 40 {
+//            self.frame.size.width =  self.frame.size.width + 40
+//        }
+
+    
         let x = self.frame.origin.x
         let width = self.frame.size.width
         
@@ -601,7 +632,16 @@ extension DDTextView : UITextViewDelegate {
             self.frame.origin.x  = leftMargin
         }
         
+        if width > maxWidth {
+            self.frame.size.width = maxWidth
+        }
+        
+        
+        DDdelegate.DDTextViewSizeChanged(self, height: self.ddHeight)
     }
+    
+    
+   // func
     
     
     
