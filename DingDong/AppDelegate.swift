@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var comeFromBack = false
     //这个方法只会在app,从后台进入前台是触发,第一次启动不会触发.
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         
         comeFromBack = true
     }

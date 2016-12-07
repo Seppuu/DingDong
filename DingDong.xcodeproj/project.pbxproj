@@ -160,6 +160,7 @@
 		378F55301CF4399600CC1CC9 /* SheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 378F552E1CF4399600CC1CC9 /* SheetCell.xib */; };
 		378F55341CF45ADB00CC1CC9 /* StaffPicks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 378F55331CF45ADB00CC1CC9 /* StaffPicks.storyboard */; };
 		378F553C1CF5514F00CC1CC9 /* PicksSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378F553B1CF5514F00CC1CC9 /* PicksSheetView.swift */; };
+		37936F961DF7F19F00FB8EF9 /* WeChatActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37936F951DF7F19F00FB8EF9 /* WeChatActivity.swift */; };
 		379BB2271CB4FFE200486164 /* UIImage+DD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379BB2261CB4FFE200486164 /* UIImage+DD.swift */; };
 		379C97C31CB6BA19006FA6C4 /* DDTextFontEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379C97C21CB6BA19006FA6C4 /* DDTextFontEditView.swift */; };
 		379C97C51CB6BA89006FA6C4 /* DDTextFontEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 379C97C41CB6BA89006FA6C4 /* DDTextFontEditView.xib */; };
@@ -446,6 +447,7 @@
 		378F552E1CF4399600CC1CC9 /* SheetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SheetCell.xib; sourceTree = "<group>"; };
 		378F55331CF45ADB00CC1CC9 /* StaffPicks.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StaffPicks.storyboard; sourceTree = "<group>"; };
 		378F553B1CF5514F00CC1CC9 /* PicksSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicksSheetView.swift; sourceTree = "<group>"; };
+		37936F951DF7F19F00FB8EF9 /* WeChatActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeChatActivity.swift; sourceTree = "<group>"; };
 		379BB2261CB4FFE200486164 /* UIImage+DD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+DD.swift"; sourceTree = "<group>"; };
 		379C97C21CB6BA19006FA6C4 /* DDTextFontEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDTextFontEditView.swift; sourceTree = "<group>"; };
 		379C97C41CB6BA89006FA6C4 /* DDTextFontEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DDTextFontEditView.xib; sourceTree = "<group>"; };
@@ -796,6 +798,7 @@
 		3706FDFF1C86ACB20016199E /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				37936F951DF7F19F00FB8EF9 /* WeChatActivity.swift */,
 				372257271D050DEE00E2B24A /* JsonManager.swift */,
 				37530FFE1C86CC520034FF33 /* DDAudioService.swift */,
 				37BBD4201D014FE600379C4A /* NetworkManager.swift */,
@@ -2022,6 +2025,7 @@
 				371A919C1CFE77D7000C537D /* Tips.swift in Sources */,
 				37B3F7FA1D0168D600688A15 /* AMPopTip.m in Sources */,
 				37E556571CC0F83500105CA2 /* DDUserDefaults.swift in Sources */,
+				37936F961DF7F19F00FB8EF9 /* WeChatActivity.swift in Sources */,
 				37F685A01CFC470E008832C8 /* ChannelViewController.swift in Sources */,
 				37CA6BD51C9EE97A00B1D928 /* FBShimmeringView.m in Sources */,
 				37B3F7F81D0168D600688A15 /* AMPopTip+Entrance.m in Sources */,

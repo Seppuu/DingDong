@@ -30,6 +30,7 @@ pod 'ReachabilitySwift', '~> 3'
 pod 'PageMenu', :git => 'https://github.com/orazz/PageMenu.git'
 pod 'EAIntroView', '~> 2.9.0'
 pod 'RandomColorSwift'
+pod 'MonkeyKing', '~> 1.1.0'
 
 
 

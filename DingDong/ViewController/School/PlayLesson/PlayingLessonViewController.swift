@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 import SnapKit
-
+import MonkeyKing
 import RealmSwift
 
 class PlayingLessonViewController: BaseViewController {
@@ -522,50 +522,50 @@ class PlayingLessonViewController: BaseViewController {
     
     func shareToWeChat(with shareURL:String) {
         
-//        let urlString = shareURL
-//        let title = self.lesson.name
-//        
-//        let shareURL = URL(string: urlString)!
-//        
-//        //图片换成logo.
-//        let info = MonkeyKing.Info(
-//            title: title,
-//            description: title,
-//            thumbnail: UIImage(named: "DingDonglogo"),
-//            media: .url(shareURL)
-//        )
-//        
-//        let sessionMessage = MonkeyKing.Message.weChat(.session(info: info))
-//        
-//        let weChatSessionActivity = WeChatActivity(
-//            type: .Session,
-//            message: sessionMessage) { (result) in
-//            
-//            print(result)
-//        }
-//        
-//        //let timelineMessage = MonkeyKing.Message.WeChat(.Timeline(info: info))
-//        
-//        let activityViewController = UIActivityViewController(activityItems: [shareURL,title,UIImage(named: "DingDonglogo")!], applicationActivities: [weChatSessionActivity])
-//       
-//        activityViewController.excludedActivityTypes = [
-//        
-//            UIActivityType.addToReadingList,
-//            UIActivityType.assignToContact,
-//            UIActivityType.print,
-//            UIActivityType.copyToPasteboard,
-//            UIActivityType.airDrop,
-//            UIActivityType.postToFacebook,
-//            UIActivityType.postToTwitter,
-//            UIActivityType.mail,
-//            UIActivityType.message,
-//            UIActivityType.openInIBooks,
-//        ]
-//        
-//        DispatchQueue.main.async { [weak self] in
-//            self?.presentViewController(activityViewController, animated: true, completion: nil)
-//        }
-//
+        let urlString = shareURL
+        let title = self.lesson.name
+        
+        let shareURL = URL(string: urlString)!
+        
+        //图片换成logo.
+        let info = MonkeyKing.Info(
+            title: title,
+            description: title,
+            thumbnail: UIImage(named: "DingDonglogo"),
+            media: .url(shareURL)
+        )
+        
+        let sessionMessage = MonkeyKing.Message.weChat(.session(info: info))
+        
+        let weChatSessionActivity = WeChatActivity(
+            type: .Session,
+            message: sessionMessage) { (result) in
+            
+            print(result)
+        }
+        
+        //let timelineMessage = MonkeyKing.Message.WeChat(.Timeline(info: info))
+        
+        let activityViewController = UIActivityViewController(activityItems: [shareURL,title,UIImage(named: "DingDonglogo")!], applicationActivities: [weChatSessionActivity])
+       
+        activityViewController.excludedActivityTypes = [
+        
+            UIActivityType.addToReadingList,
+            UIActivityType.assignToContact,
+            UIActivityType.print,
+            UIActivityType.copyToPasteboard,
+            UIActivityType.airDrop,
+            UIActivityType.postToFacebook,
+            UIActivityType.postToTwitter,
+            UIActivityType.mail,
+            UIActivityType.message,
+            UIActivityType.openInIBooks,
+        ]
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.present(activityViewController, animated: true, completion: nil)
+        }
+
     }
     
     func updateTextViewAndPhotos(_ previousCurrentPage:Int,currentPage:Int) {
