@@ -317,7 +317,6 @@ class DDPhotosViewController: BaseViewController,UITableViewDelegate,UITableView
         
     }
 
-    
     func deleteRecords() {
         //删除图片显示的时间段,删除完成之后,之后的所有时间戳向前移动该时间段.
         setAudioHelper()
@@ -325,7 +324,7 @@ class DDPhotosViewController: BaseViewController,UITableViewDelegate,UITableView
         let realm = try! Realm()
         
         //起点,持续时间 用于音频剪切 和 用于时间点处理
-        //这里的起点就是时间戳本身,持续时间是改图片消失前的时间.(后一个点 - 当然的点)
+        //这里的起点就是时间戳本身,持续时间是改图片消失前的时间.(后一个点 - 当前的点)
         var trimDict = [Float:Float]()
         var trimmingPoints = [TimeStamp]() //将要删除的点 用于时间点处理
         
@@ -341,7 +340,6 @@ class DDPhotosViewController: BaseViewController,UITableViewDelegate,UITableView
                 let duration = (page.playQueue[i+1].time) - (point.time)
                 
                 trimDict[startTime] = duration
-                
                 
             }
             
@@ -369,7 +367,7 @@ class DDPhotosViewController: BaseViewController,UITableViewDelegate,UITableView
         
         
         
-        //更改队列的时间点.
+        //更新队列的时间点.
         let startTimes = Array(trimDict.keys)
         
         for startTime in startTimes {
