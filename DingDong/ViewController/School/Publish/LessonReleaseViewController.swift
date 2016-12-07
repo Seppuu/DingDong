@@ -223,9 +223,11 @@ class LessonReleaseViewController: BaseViewController ,UITableViewDelegate,UITab
     func saveToLocal() {
         
         //TODO:将标题保存下来,如果用户编辑了.
-        let indexPath = IndexPath(item: 1, section: 1)
+        let indexPath = IndexPath(item: 0, section: 0)
         
-        let titleCell = infoTableView.cellForRow(at: indexPath) as! BasicInfoCell
+        guard let titleCell = infoTableView.cellForRow(at: indexPath) as? BasicInfoCell else {
+            return
+        }
         
         if titleCell.rightTextField.text == "" {
             DDAlert.alert(title: "提示", message: "请添加标题", dismissTitle: "OK", inViewController: self, withDismissAction: nil)

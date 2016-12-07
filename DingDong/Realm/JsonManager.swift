@@ -30,13 +30,14 @@ class JsonManager: NSObject {
         
         let screen = [
             "width":screenWidth,
-            "height":screenHeight]
+            "height":screenHeight
+        ]
         
         let info: JSONDictionary = [
-            "album_id":"\(lesson.album!.id)" as AnyObject,
-            "duration":lesson.duration as AnyObject,
-            "name"    :lesson.name as AnyObject,
-            "theme"   :lesson.theme.nameValue as AnyObject
+            "album_id":"\(lesson.album!.id)",
+            "duration":lesson.duration,
+            "name"    :lesson.name,
+            "theme"   :lesson.theme.nameValue
         
         ]
         
@@ -56,7 +57,7 @@ class JsonManager: NSObject {
     }
     
     fileprivate func getImageDict(with lesson:Lesson) -> JSONDictionary? {
-        var dict: JSONDictionary = JSONDictionary()
+        var dict = JSONDictionary()
         
         for page in lesson.pages {
             
@@ -175,7 +176,7 @@ class JsonManager: NSObject {
             
         }
         
-        return ["timeline":dicts as AnyObject]
+        return ["timeline":dicts]
     }
     
     
@@ -339,18 +340,6 @@ class JsonManager: NSObject {
         
         return playQueue
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     

@@ -309,16 +309,23 @@ extension NetworkManager {
             }
             
             for (key,value) in audioDict {
-                let data = value as! Data
-                multipartFormData.append(data, withName: key, fileName: "record0.mp3", mimeType: "audio/mp3")
+                
+                    if let data = value as? Data {
+                        multipartFormData.append(data, withName: key, fileName: "record0.mp3", mimeType: "audio/mp3")
+                
+                    }
+                
                 
             }
             
             if let imagedict = imageDict {
                 for (key,value) in imagedict {
-                    let data = value as! Data
-                    //print("Size of Image(bytes):\(data.length)")
-                    multipartFormData.append(data, withName: key, fileName: "\(key).jpg", mimeType: "image/jpg")
+                    if let data = value as? Data {
+                        //print("Size of Image(bytes):\(data.length)")
+                        multipartFormData.append(data, withName: key, fileName: "\(key).jpg", mimeType: "image/jpg")
+                        
+                    }
+
 
                 }
             }
@@ -329,27 +336,15 @@ extension NetworkManager {
                 switch encodingResult {
                 case .success(let upload, _, _ ):
                     
-                    upload.downloadProgress(closure: { (pro) in
+                    upload.uploadProgress(closure: { (pro) in
                         DispatchQueue.main.async {
                             
-                            let p = Float(pro.completedUnitCount) / Float(pro.totalUnitCount)
+                            print("上传进度: \(pro.fractionCompleted)")
+                            let p = Float(pro.fractionCompleted)
                             progress(p)
                             
                         }
                     })
-                    
-
-                    
-                    
-//                    upload.progress({ (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
-//                        DispatchQueue.main.async {
-//                            
-//                            let p = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
-//                            progress(progress: p)
-//                        }
-                    
-                        
-                   // })
                     
                     upload.responseJSON(completionHandler: { (response) in
                         
@@ -364,8 +359,8 @@ extension NetworkManager {
                             else {
                                 completion(false)
                             }
-                        case .failure(_):
-                            //print(error.description)
+                        case .failure(let error):
+                            print(error.localizedDescription)
                             completion(false)
                         }
                         
@@ -620,7 +615,7 @@ extension NetworkManager {
         
         var newDict = dict
         
-        newDict["sign"] = md5 as AnyObject?
+        newDict["sign"] = md5
         
         return newDict
     }
