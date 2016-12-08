@@ -56,7 +56,7 @@ class JsonManager: NSObject {
         return jsonDict
     }
     
-    fileprivate func getImageDict(with lesson:Lesson) -> JSONDictionary? {
+    fileprivate func getImageDict(with lesson:Lesson) -> JSONDictionary {
         var dict = JSONDictionary()
         
         for page in lesson.pages {
@@ -77,12 +77,14 @@ class JsonManager: NSObject {
             
         }
         
-        if dict.keys.count == 0 {
-            return nil
-        }
-        else {
-            return dict
-        }
+        return dict
+        
+//        if dict.keys.count == 0 {
+//            return nil
+//        }
+//        else {
+//            
+//        }
         
     }
     

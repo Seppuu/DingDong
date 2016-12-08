@@ -107,11 +107,21 @@ extension LessonsUnreleasedViewController : UITableViewDataSource,UITableViewDel
         cell.accessoryType = .disclosureIndicator
         cell.coverImageView.backgroundColor = UIColor ( red: 0.8539, green: 0.8539, blue: 0.8539, alpha: 1.0 )
         
-        cell.nameLabel.text = "未发布课程\(indexPath.row)"
+        
+        let lesson = lessonResutls[indexPath.row]
+        
+        if lesson.name == "" {
+            //TODO:课程名字应该在进入录制前就设定,而不是发布的时候.
+            cell.nameLabel.text = "未命名课程\(indexPath.row)"
+        }
+        else {
+            cell.nameLabel.text = lesson.name
+        }
+        
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateString = formatter.string(from: lessonResutls[indexPath.row].created)
+        let dateString = formatter.string(from: lesson.created)
         
         cell.detailLabel.font = UIFont.systemFont(ofSize: 14)
         cell.detailLabel.text = "创建于:" + dateString

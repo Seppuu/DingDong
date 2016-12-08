@@ -190,8 +190,8 @@ extension DDImagesAttachmentView : UICollectionViewDelegate,UICollectionViewDele
     }
     
     //MARK: UIScrollViewDelegate
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
         let previousPage = currentPage
         
         currentPage = Int(scrollView.contentOffset.x / self.ddWidth)
@@ -204,7 +204,7 @@ extension DDImagesAttachmentView : UICollectionViewDelegate,UICollectionViewDele
                 
                 let realm = try! Realm()
                 try! realm.write {
-                   self.photos[currentPage].willShow = true
+                    self.photos[currentPage].willShow = true
                 }
                 
                 imageScorlledHandler?(currentPage)
@@ -214,6 +214,7 @@ extension DDImagesAttachmentView : UICollectionViewDelegate,UICollectionViewDele
             
         }
     }
+    
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         

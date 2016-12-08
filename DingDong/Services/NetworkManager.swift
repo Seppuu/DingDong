@@ -289,6 +289,7 @@ extension NetworkManager {
   
         //json 序列化,加入dict.
         let paramsJSON = JSON(dict)
+        print(paramsJSON)
         guard  let paramsString = paramsJSON.rawString(String.Encoding.utf8, options: .prettyPrinted) else {return}
         
         let fullDict:JSONDictionary = [
@@ -298,6 +299,7 @@ extension NetworkManager {
         let newDict = generatePostDictWithBaseDictOr(fullDict)
         
         let urlString = uploadLessonURL
+        
         
         Alamofire.upload(multipartFormData: { (multipartFormData) in
             
@@ -310,12 +312,10 @@ extension NetworkManager {
             
             for (key,value) in audioDict {
                 
-                    if let data = value as? Data {
-                        multipartFormData.append(data, withName: key, fileName: "record0.mp3", mimeType: "audio/mp3")
-                
-                    }
-                
-                
+                if let data = value as? Data {
+                    multipartFormData.append(data, withName: key, fileName: "record0.mp3", mimeType: "audio/mp3")
+                    
+                }
             }
             
             if let imagedict = imageDict {
@@ -325,58 +325,54 @@ extension NetworkManager {
                         multipartFormData.append(data, withName: key, fileName: "\(key).jpg", mimeType: "image/jpg")
                         
                     }
-
-
                 }
             }
             
-
-            }, to: urlString) { (encodingResult) in
+            
+        }, to: urlString, encodingCompletion: { (encodingResult) in
+            
+            switch encodingResult {
+            case .success(let upload, _, _ ):
                 
-                switch encodingResult {
-                case .success(let upload, _, _ ):
-                    
-                    upload.uploadProgress(closure: { (pro) in
-                        DispatchQueue.main.async {
-                            
-                            print("上传进度: \(pro.fractionCompleted)")
-                            let p = Float(pro.fractionCompleted)
-                            progress(p)
-                            
-                        }
-                    })
-                    
-                    upload.responseJSON(completionHandler: { (response) in
+                upload.uploadProgress(closure: { (pro) in
+                    DispatchQueue.main.async {
                         
-                        switch response.result {
-                        case .success:
-                            let json = JSON(response.result.value!)
-                            let status = json["status"].int!
-                            //print(json)
-                            if status == 1 {
-                                completion(true)
-                            }
-                            else {
-                                completion(false)
-                            }
-                        case .failure(let error):
-                            print(error.localizedDescription)
+                        print("上传进度: \(pro.fractionCompleted)")
+                        let p = Float(pro.fractionCompleted)
+                        progress(p)
+                        
+                    }
+                })
+                
+                upload.responseJSON(completionHandler: { (response) in
+                    
+                    switch response.result {
+                    case .success:
+                        let json = JSON(response.result.value!)
+                        let status = json["status"].int!
+                        //print(json)
+                        if status == 1 {
+                            completion(true)
+                        }
+                        else {
                             completion(false)
                         }
-                        
-                    })
+                    case .failure(let error):
+                        print(error)
+                        completion(false)
+                    }
                     
-                    
-                case .failure(_):
-//                    print("Failure")
-//                    print(encodingError)
-                    completion(false)
-                }
-                
-        }
-        
-        
+                })
 
+            case .failure(_):
+                //                    print("Failure")
+                //                    print(encodingError)
+                completion(false)
+            }
+            
+
+            
+        })
         
     }
     

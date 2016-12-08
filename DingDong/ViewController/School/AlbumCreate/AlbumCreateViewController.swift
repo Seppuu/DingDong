@@ -363,8 +363,21 @@ extension AlbumCreateViewController: CTAssetsPickerControllerDelegate {
      *
      *  @see assetsPickerControllerDidCancel:
      */
+    //MARK:相册代理
     public func assetsPickerController(_ picker: CTAssetsPickerController!, didFinishPickingAssets assets: [Any]!) {
         
+        if let actualAsset = assets.first as? PHAsset {
+            
+            PhotoManager.sharedManager.getAssetThumbnail(actualAsset, completion: { (image) in
+                self.coverImage = image
+            })
+            
+        }
+        
+        self.hasConver = true
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.albumInfoTableView.reloadRows(at: [indexPath], with: .fade)
+        picker.dismiss(animated: true, completion: nil)
     }
 
     
@@ -376,6 +389,7 @@ extension AlbumCreateViewController: CTAssetsPickerControllerDelegate {
                 
                 let picker = CTAssetsPickerController()
                 picker.delegate = self
+                picker.showsSelectionIndex = true
                 self.present(picker, animated: true, completion: nil)
                 
             })
@@ -391,24 +405,7 @@ extension AlbumCreateViewController: CTAssetsPickerControllerDelegate {
         picker.select(asset)
     }
     
-    
-    //MARK:相册代理
-    private func assetsPickerController(_ picker: CTAssetsPickerController!, didFinishPickingAssets assets:[AnyObject]!) {
-        
-        if let actualAsset = assets.first as? PHAsset {
-            
-            PhotoManager.sharedManager.getAssetThumbnail(actualAsset, completion: { (image) in
-                self.coverImage = image
-            })
-            
-        }
-        
-        self.hasConver = true
-        let indexPath = IndexPath(row: 0, section: 0)
-        self.albumInfoTableView.reloadRows(at: [indexPath], with: .fade)
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
+
     
     
 }

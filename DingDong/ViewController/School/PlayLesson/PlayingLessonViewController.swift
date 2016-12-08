@@ -88,7 +88,7 @@ class PlayingLessonViewController: BaseViewController {
         }
         
         
-        //TODO: set author image
+        //set author image
         rightTopView.backgroundColor = UIColor.clear
         
         let url = URL(string: self.authorAvatarURl)

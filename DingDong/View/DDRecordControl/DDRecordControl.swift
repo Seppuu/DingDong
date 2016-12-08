@@ -835,6 +835,10 @@ class DDRecordControl: UIView {
 //        }
         
         displayLink = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(DDRecordControl.checkVoiceRecordValue), userInfo: nil, repeats: true)
+        
+        //当UIScrollView滚动时,计时器停在.因此,将time加入到NSRunLoopModes解决这个问题.
+        RunLoop.current.add(displayLink, forMode: .commonModes)
+        
         displayLink.fire()
         
     }
